@@ -26,6 +26,7 @@ set -uo pipefail
 LOG="$SRV/logs/latest.log"
 DIM="minecraft:${WORLD}"
 DONE='Operation completed|blocks have been created'   # //set AND //generate
+MAXWAIT="${MAXWAIT:-600}"                              # safety net; a real stall pauses+flags
 
 send(){ printf '%s\n' "$1" > "$SRV/console.in"; }
 mark(){ wc -l < "$LOG"; }
@@ -38,26 +39,45 @@ while IFS= read -r line; do
   case "$line" in
     *"//generate"*|*"//set"*|*"//paste"*)
       b=$(mark); send "$line"
-      t=0; while [ "$t" -lt 300 ]; do
-        if tail -n +$((b+1)) "$LOG" | grep -Eq "$DONE"; then break; fi
+      # FAWE gates large edits behind a "Use //confirm" prompt -- the op will NOT run until
+      # acknowledged. Poll for completion; ack the confirm once if it appears; NEVER advance on
+      # a stall (per ownership split: a timeout pauses and flags, it does not skip the op).
+      confirmed=0; done_ok=0; t=0
+      while [ "$t" -lt "$MAXWAIT" ]; do
+        new=$(tail -n +$((b+1)) "$LOG")
+        printf '%s' "$new" | grep -Eq "$DONE" && { done_ok=1; break; }
+        if [ "$confirmed" = 0 ] && printf '%s' "$new" | grep -qi 'Use //confirm'; then
+          send "//confirm"; confirmed=1
+        fi
         sleep 1; t=$((t+1))
       done
       res=$(tail -n +$((b+1)) "$LOG" | grep -E "$DONE" | tail -1 | sed -E 's/^\[[^]]*\][^]]*\]: //')
-      echo "[$n] ${line}  ->  ${res:-<timeout ${t}s>}"
+      tag=""; [ "$confirmed" = 1 ] && tag=" (confirmed)"
+      if [ "$done_ok" = 1 ]; then
+        echo "[$n] ${line}  ->  ${res}${tag}"
+      else
+        echo "[$n] ${line}  ->  !! STALLED ${t}s (confirmed=$confirmed) -- PAUSING, not advancing"
+        echo "   last server lines:"; tail -n +$((b+1)) "$LOG" | grep -viE 'Villages|Storage' | tail -4 | sed 's/^/     /'
+        exit 2
+      fi
       ;;
     *) send "$line"; sleep 0.3; echo "[$n] $line" ;;
   esac
 done < /tmp/atlantis.commands
 
 echo "== verify centre marker at $PX $PY $PZ in $DIM =="
+# forceload the centre chunk so the vanilla probe can't false-negative on an unloaded chunk
+send "execute in $DIM run forceload add $PX $PZ"; sleep 1.5
 b=$(mark)
 send "execute in $DIM if block $PX $PY $PZ minecraft:redstone_block run say ATLANTIS_MARKER_OK"
-sleep 1
-if tail -n +$((b+1)) "$LOG" | grep -qE "ATLANTIS_MARKER_OK|Test passed"; then
-  echo "PLACEMENT: marker present at ($PX,$PY,$PZ) -> ON TARGET"
-else
-  echo "PLACEMENT: marker NOT found -> report where the redstone column actually is"
-fi
+ok=0; t=0; while [ "$t" -lt 8 ]; do
+  tail -n +$((b+1)) "$LOG" | grep -q "ATLANTIS_MARKER_OK" && { ok=1; break; }
+  sleep 1; t=$((t+1))
+done
+[ "$ok" = 1 ] \
+  && echo "PLACEMENT: marker present at ($PX,$PY,$PZ) -> ON TARGET" \
+  || echo "PLACEMENT: marker NOT found -> report where the redstone column actually is"
+send "execute in $DIM run forceload remove $PX $PZ" >/dev/null 2>&1 || true
 
 send "//world" >/dev/null 2>&1 || true
 REMOTE
