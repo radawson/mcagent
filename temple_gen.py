@@ -53,6 +53,7 @@ def t_short(n, v):  return b"\x02" + _s(n) + struct.pack(">h", v)
 def t_barr(n, d):   return b"\x07" + _s(n) + struct.pack(">i", len(d)) + bytes(d)
 def t_comp(n, inner): return b"\x0a" + _s(n) + inner + b"\x00"
 def t_list0(n, et=10): return b"\x09" + _s(n) + bytes([et]) + struct.pack(">i", 0)
+def t_iarr(n, vals): return b"\x0b" + _s(n) + struct.pack(">i", len(vals)) + b"".join(struct.pack(">i", v) for v in vals)
 
 def _varint(n):
     out = bytearray()
@@ -87,6 +88,10 @@ def write_schem(blocks, path):
         t_int("Version", 2)
         + t_int("DataVersion", DATA_VERSION)
         + t_comp("Metadata", t_int("WEOffsetX", mnx) + t_int("WEOffsetY", mny) + t_int("WEOffsetZ", mnz))
+        # Top-level Sponge Offset = absolute min corner. FAWE's `//paste -o` places the min corner AT
+        # this Offset (proven by the POC). Without it, FAWE falls back to WEOffset with the opposite
+        # sign convention and pastes at the NEGATED position. Keep both; Offset takes precedence.
+        + t_iarr("Offset", [mnx, mny, mnz])
         + t_short("Width", W) + t_short("Height", H) + t_short("Length", L)
         + t_int("PaletteMax", len(palette))
         + t_comp("Palette", b"".join(t_int(k, v) for k, v in palette.items()))

@@ -40,7 +40,19 @@ donecount(){ tail -n +$((START+1)) "$LOG" | grep -cE "$DONE"; }
 n=0; hcount=0
 while IFS= read -r line; do
   [ -z "$line" ] && continue
-  case "$line" in \#*) continue ;; esac
+  case "$line" in
+    \#PHASE*)
+      # Design emits #PHASE at each zone/feature boundary. Flush a save here so no single
+      # save-all carries the whole delta (which would risk the 60s Watchdog kill at S=185).
+      echo "[phase] $line -- flushing save"
+      b=$(mark); send "save-all flush"
+      t=0; while [ "$t" -lt 180 ]; do
+        tail -n +$((b+1)) "$LOG" | grep -q "Saved the game" && break; sleep 1; t=$((t+1))
+      done
+      echo "   saved (${t}s)"
+      continue ;;
+    \#*) continue ;;
+  esac
   n=$((n+1))
   case "$line" in
     *"//generate"*|*"//set"*|*"//paste"*)

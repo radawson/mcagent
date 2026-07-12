@@ -260,3 +260,108 @@ Cowork can write here directly and will stop using the scratch outputs folder.
   dir, then `//world scratchpad` ; `//schem load temple` ; `//paste -o -a`. Probe: pylon silver at the
   +X end, gold pinnacle course on top, orichalcum columns in the hypostyle, gold mass in the sanctuary.
   NB the city's centre marker column still runs up through the temple -- harmless, harness needs it.
+
+## [design] 2026-07-11 — S=185 staged CORE-FIRST; fill-opt guardrail CORRECTED
+
+- Offset bug was MINE: temple_gen wrote only Metadata.WEOffset, not the top-level Sponge `Offset`
+  int-array, so FAWE used the opposite sign convention and mirrored the paste. [exec] fixed it with
+  t_iarr("Offset",[min corner]). RULE: top-level `Offset` is authoritative; WEOffset alone is ambiguous.
+- SCOPE (Rick): CORE FIRST at S=185. --core flag added (stops at water ring 3, r=13.5 stades = 2497,
+  ~5 km ⌀). --tile added (use 256 at S=185: ~2.5M-block ops instead of ~10M).
+  Core: ~19.6M columns, ~76k chunks (~3 min pregen), ~690M blocks. Belt deferred (see below).
+- GUARDRAIL CORRECTED. I previously said "fill-opt required before S=185". Wrong -- it's required
+  before the BELT, not the core. The core's land MUST stay solid: tunnels, docks and quay faces all
+  need solid land at sea level; hollowing it would drain the tunnel water into the cavity. Making the
+  water rings shallower saves nothing either (you swap water blocks for stone foundation, same volume).
+- SAVE-FLUSH WATCHDOG: an OPS problem with an OPS solution -- do NOT compromise the geometry.
+  Recommendation: build the S=185 core in PHASES with a `save-all` between each (per zone), so each
+  flush is a fraction of the 690M delta. Optionally relax Watchdog max-tick-time for the build window
+  (server config -> needs Rick's explicit go; staged saves alone should suffice).
+- BELT (deferred, S=185): ~433M columns, ~1.7M chunks (~1 hr pregen), ~2.5e9 blocks, plausibly tens of
+  GB of region files -- 95% of the build for 20 km of empty plain. It IS the place for
+  surface+substrate+edge-quay (no water/tunnels there, so hollowing is safe). Disk check first.
+  Generator is radial+tiled -> the belt is purely ADDITIVE, so core-first costs nothing later.
+
+## [design] 2026-07-11 — #PHASE contract for staged saves (Rick: staged saves first, config only if needed)
+
+- atlantis_cmds.py now emits `#PHASE <name>` markers at every natural boundary: each zone
+  (zone-island-r*, zone-water-r*, zone-land-r*), then walls / canal / passages / docks / markers.
+- They are COMMENT lines -> the current harness already skips them (backwards-compatible, no breakage).
+- CONTRACT: **design owns where the boundaries are; exec owns what happens at one** (save / checkpoint
+  / pause). To stage the S=185 core so no single flush carries the whole ~690M delta, [exec] can add a
+  case to run_commands.sh BEFORE the generic `#` skip:
+
+      \#PHASE*)
+        echo "[phase] $line -- flushing save"
+        b=$(mark); send "save-all flush"
+        t=0; while [ $t -lt 180 ]; do
+          tail -n +$((b+1)) "$LOG" | grep -q "Saved the game" && break; sleep 1; t=$((t+1))
+        done
+        echo "   saved (${t}s)"
+        ;;
+      \#*) continue ;;
+
+- Plan: staged saves FIRST. Only if a phase flush still trips the 60s Watchdog kill do we touch
+  Watchdog max-tick-time (server config -> would need Rick's explicit go).
+- S=185 core commands:
+    python3 atlantis_cmds.py --scale 185 --core --tile 256 --out atlantis_185_core.commands
+    python3 temple_gen.py    --scale 185 --out temple185.schem
+  Marker column spans -59..-2 @S=185, so the harness PY=-52 probe still lands inside it (no change).
+
+## [design] 2026-07-11 — S=185 crashed the save; TWO corrections + the actual fix (ring depth)
+
+- MY ERROR: I claimed a phase save would only write the zone that landed. Wrong in effect. BUT the
+  reason matters: `save-all` writes only DIRTY chunks. The first phase save hit 75s because the WIPE
+  (+fresh pregen) had dirtied the ENTIRE 76k-chunk footprint, so it carried everything. Staged saves
+  aren't useless -- they were poisoned by the wipe in front of them. scratchpad is clean post-crash,
+  so there is NO wipe to flush this time.
+- CORRECTION TO OPTION B (fill-opt): it would BREAK the core. Hollowing land beneath the surface
+  drains the trireme tunnels, rock-cut docks and quay faces into the cavity -- all three need solid
+  land AT SEA LEVEL. And it wouldn't fix the save anyway: dirty CHUNK count stays 76k either way.
+- THE ACTUAL FIX (option C, implemented): **ring depth**. Plato fixes the depth of exactly one thing --
+  the CANAL, at 100 ft (~30 m). Ring depth was my invented number (I copied the canal's). Set rings to
+  10 m (still deep water; a trireme draws 1-2 blocks) and keep the canal literally 100 ft:
+    * yf (-60) stays the CANAL floor; new `rf = sea - m2b(10)` is the ring floor / city base.
+    * @S=185: canal floor -60, ring floor -40, sea -30, land -22, citadel -10.
+    * Core drops ~690M -> ~300M blocks (2.3x) with EVERY feature intact (tunnels/docks/quays sit at
+      sea level, above rf). More faithful to the text, not less.
+  All zone/wall/tunnel/dock fills rebased yf -> rf. Canal keeps the deep literal trench. Marker column
+  still starts at yf+1 so the harness PY=-52 probe is unchanged. temple_gen needs NO change (same sea).
+- PLAN: measure, don't guess. Build ONE zone (island) with a phase save and REPORT the save time.
+  If it's a few seconds, run the rest staged, no config change. Only if a phase flush approaches the
+  60s kill do we raise Watchdog max-tick-time for the build window (Rick's call).
+- Do NOT wipe first (scratchpad is already clean) -- the wipe is what caused the crash.
+
+## [design] 2026-07-11 — MEASURED save model -> bounded-delta flushes (--phase-every)
+
+- [exec] MEASURED: save cost = **~7s baseline + dirty_chunks/200**. Island (2,600 chunks) = 20s.
+  Extrapolated per-zone: land1 ~44s, water2 ~61s, land2 ~120s, water3 ~157s -> the big zones CRASH.
+- MY ERROR (again): the ring-depth change cut BLOCKS, not CHUNKS. It made the build faster/lighter and
+  is still the more faithful reading of Plato -- but it did nothing for the save. Save cost is chunks
+  touched, full stop. Same reason the old fill-opt (option B) never would have fixed it either.
+- ROOT ISSUE IS GRANULARITY, NOT CONFIG. Total work is fixed (~76k chunks / 200 = ~380s of writing).
+  The only question is whether it lands in lumps big enough to kill. #PHASE was per-ZONE, and zones are
+  wildly unequal (water3 = 30k chunks in one lump).
+- FIX (design): `--phase-every N` inserts a #PHASE marker every N heavy ops, BOUNDING the dirty delta.
+  With --tile 256 and --phase-every 24: ~3k chunks/flush -> ~25s each, ~20 flushes, ~9 min total.
+  Never within 30s of the 60s kill. Watchdog stays ARMED. No config change. No geometry compromise.
+- REJECTED option 3 (async auto-save, no forced flush): non-deterministic, and its failure mode only
+  appears at the END -- if auto-save hasn't kept pace the final flush is the same 150s crash, and
+  BlueMap stays dark until then.
+- COMMAND: python3 atlantis_cmds.py --scale 185 --core --tile 256 --phase-every 24 --out atlantis_185_core.commands
+  Island is already built+persisted; continue from there. [exec]: tune --phase-every off the measured
+  model if flushes drift (target ~25s, hard ceiling 40s).
+
+## [exec] 2026-07-12 — Temple of Poseidon pasted on citadel (schematic engine) + Offset fix
+
+- temple_gen.py DATA_VERSION=4790 CONFIRMED correct (version.json world_version=4790, level.dat=4790;
+  pack formats moved to 84/101 but the world DataVersion did not).
+- CALIBRATION FIX: temple_gen wrote only Metadata WEOffset -> `//paste -o` landed the temple at the
+  NEGATED position (10016,51,-9992) instead of (-10016,-51,9992). FAWE reads WEOffset as origin->min
+  (negated for -o). Added the top-level Sponge `Offset` int-array = absolute min corner (the POC's
+  proven approach); FAWE's -o then places the min corner AT Offset. Re-pasted -> lands on the citadel.
+  (Same deterministic path as the original POC; the POC worked because it wrote the top-level Offset.)
+- Verified headlessly on scratchpad citadel (-10000/10000): silver pylon iron_block @ (-9986,-46);
+  gold pinnacle cap @ -44; orichalcum waxed_cut_copper columns (hypostyle); gold_block sanctuary (-X);
+  smooth_quartz walls; centre redstone marker runs up through (harmless). 33x10x17, 2206 blocks.
+- At S=30 it's a doll's house as expected; the payoff is S=185 (30-block nave, looming pylon).

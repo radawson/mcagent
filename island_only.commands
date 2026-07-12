@@ -1,0 +1,101 @@
+//world scratchpad
+# Atlantis @ 185 b/stade | core r=2497 | metropolis r=11747 | TILE=256
+# vertical: canal floor -60 | ring floor -40 | sea -30 | land -22 | citadel -10 | wall -15 | great -10 | capped maxr=2497
+#PHASE zone-island-r462
+//pos1 -10462,-40,9538
+//pos2 -10241,-11,9727
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10462,-40,9728
+//pos2 -10241,-11,9983
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10462,-40,9984
+//pos2 -10241,-11,10239
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10462,-40,10240
+//pos2 -10241,-11,10462
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10240,-40,9538
+//pos2 -9985,-11,9727
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10240,-40,9728
+//pos2 -9985,-11,9983
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10240,-40,9984
+//pos2 -9985,-11,10239
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10240,-40,10240
+//pos2 -9985,-11,10462
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9984,-40,9538
+//pos2 -9729,-11,9727
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9984,-40,9728
+//pos2 -9729,-11,9983
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9984,-40,9984
+//pos2 -9729,-11,10239
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9984,-40,10240
+//pos2 -9729,-11,10462
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9728,-40,9538
+//pos2 -9538,-11,9727
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9728,-40,9728
+//pos2 -9538,-11,9983
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9728,-40,9984
+//pos2 -9538,-11,10239
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9728,-40,10240
+//pos2 -9538,-11,10462
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10462,-10,9538
+//pos2 -10241,-10,9727
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10462,-10,9728
+//pos2 -10241,-10,9983
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10462,-10,9984
+//pos2 -10241,-10,10239
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10462,-10,10240
+//pos2 -10241,-10,10462
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10240,-10,9538
+//pos2 -9985,-10,9727
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10240,-10,9728
+//pos2 -9985,-10,9983
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10240,-10,9984
+//pos2 -9985,-10,10239
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -10240,-10,10240
+//pos2 -9985,-10,10462
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9984,-10,9538
+//pos2 -9729,-10,9727
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9984,-10,9728
+//pos2 -9729,-10,9983
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9984,-10,9984
+//pos2 -9729,-10,10239
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9984,-10,10240
+//pos2 -9729,-10,10462
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9728,-10,9538
+//pos2 -9538,-10,9727
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9728,-10,9728
+//pos2 -9538,-10,9983
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9728,-10,9984
+//pos2 -9538,-10,10239
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+//pos1 -9728,-10,10240
+//pos2 -9538,-10,10462
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+#PHASE zone-water-r647
