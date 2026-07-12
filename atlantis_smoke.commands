@@ -1,0 +1,187 @@
+//world scratchpad
+# Atlantis @ 30 b/stade | core r=405 | metropolis r=1905 | TILE=512
+# vertical: floor -60 | sea -55 (depth 5) | land -54 | citadel -52 | wall -53 | great -52 | SMOKE maxr=400
+# zone island  r=0..75
+//pos1 -10075,-60,9925
+//pos2 -9925,-53,10075
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=5625
+//pos1 -10075,-52,9925
+//pos2 -9925,-52,10075
+//generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=5625
+# zone water  r=75..105
+//pos1 -10105,-60,9895
+//pos2 -9895,-60,10105
+//generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=11025&&(x+10000)^2+(z-10000)^2>5625
+//pos1 -10105,-59,9895
+//pos2 -9895,-55,10105
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=11025&&(x+10000)^2+(z-10000)^2>5625
+# zone land  r=105..165
+//pos1 -10165,-60,9835
+//pos2 -9835,-55,10165
+//generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=27225&&(x+10000)^2+(z-10000)^2>11025
+//pos1 -10165,-54,9835
+//pos2 -9835,-54,10165
+//generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=27225&&(x+10000)^2+(z-10000)^2>11025
+# zone water  r=165..225
+//pos1 -10225,-60,9775
+//pos2 -9775,-60,10225
+//generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=50625&&(x+10000)^2+(z-10000)^2>27225
+//pos1 -10225,-59,9775
+//pos2 -9775,-55,10225
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=50625&&(x+10000)^2+(z-10000)^2>27225
+# zone land  r=225..315
+//pos1 -10315,-60,9728
+//pos2 -10241,-55,10239
+//generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=99225&&(x+10000)^2+(z-10000)^2>50625
+//pos1 -10240,-60,9685
+//pos2 -9729,-55,9727
+//generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=99225&&(x+10000)^2+(z-10000)^2>50625
+//pos1 -10240,-60,9728
+//pos2 -9729,-55,10239
+//generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=99225&&(x+10000)^2+(z-10000)^2>50625
+//pos1 -10240,-60,10240
+//pos2 -9729,-55,10315
+//generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=99225&&(x+10000)^2+(z-10000)^2>50625
+//pos1 -9728,-60,9728
+//pos2 -9685,-55,10239
+//generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=99225&&(x+10000)^2+(z-10000)^2>50625
+//pos1 -10315,-54,9728
+//pos2 -10241,-54,10239
+//generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=99225&&(x+10000)^2+(z-10000)^2>50625
+//pos1 -10240,-54,9685
+//pos2 -9729,-54,9727
+//generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=99225&&(x+10000)^2+(z-10000)^2>50625
+//pos1 -10240,-54,9728
+//pos2 -9729,-54,10239
+//generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=99225&&(x+10000)^2+(z-10000)^2>50625
+//pos1 -10240,-54,10240
+//pos2 -9729,-54,10315
+//generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=99225&&(x+10000)^2+(z-10000)^2>50625
+//pos1 -9728,-54,9728
+//pos2 -9685,-54,10239
+//generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=99225&&(x+10000)^2+(z-10000)^2>50625
+# zone water  r=315..405
+//pos1 -10405,-60,9595
+//pos2 -10241,-60,9727
+//generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -10405,-60,9728
+//pos2 -10241,-60,10239
+//generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -10405,-60,10240
+//pos2 -10241,-60,10405
+//generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -10240,-60,9595
+//pos2 -9729,-60,9727
+//generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -10240,-60,9728
+//pos2 -9729,-60,10239
+//generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -10240,-60,10240
+//pos2 -9729,-60,10405
+//generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -9728,-60,9595
+//pos2 -9595,-60,9727
+//generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -9728,-60,9728
+//pos2 -9595,-60,10239
+//generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -9728,-60,10240
+//pos2 -9595,-60,10405
+//generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -10405,-59,9595
+//pos2 -10241,-55,9727
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -10405,-59,9728
+//pos2 -10241,-55,10239
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -10405,-59,10240
+//pos2 -10241,-55,10405
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -10240,-59,9595
+//pos2 -9729,-55,9727
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -10240,-59,9728
+//pos2 -9729,-55,10239
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -10240,-59,10240
+//pos2 -9729,-55,10405
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -9728,-59,9595
+//pos2 -9595,-55,9727
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -9728,-59,9728
+//pos2 -9595,-55,10239
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+//pos1 -9728,-59,10240
+//pos2 -9595,-55,10405
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=164025&&(x+10000)^2+(z-10000)^2>99225
+# circuit walls (orichalcum / tin / brass) + land-1 parapet
+//pos1 -10077,-59,9923
+//pos2 -9923,-54,10077
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=5929&&(x+10000)^2+(z-10000)^2>5329
+//pos1 -10077,-53,9923
+//pos2 -9923,-53,10077
+//generate -r minecraft:cut_copper (x+10000)^2+(z-10000)^2<=5929&&(x+10000)^2+(z-10000)^2>5329
+//pos1 -10167,-59,9833
+//pos2 -9833,-54,10167
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=27889&&(x+10000)^2+(z-10000)^2>26569
+//pos1 -10167,-53,9833
+//pos2 -9833,-53,10167
+//generate -r minecraft:polished_diorite (x+10000)^2+(z-10000)^2<=27889&&(x+10000)^2+(z-10000)^2>26569
+//pos1 -10317,-59,9728
+//pos2 -10241,-54,10239
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
+//pos1 -10240,-59,9683
+//pos2 -9729,-54,9727
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
+//pos1 -10240,-59,9728
+//pos2 -9729,-54,10239
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
+//pos1 -10240,-59,10240
+//pos2 -9729,-54,10317
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
+//pos1 -9728,-59,9728
+//pos2 -9683,-54,10239
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
+//pos1 -10317,-53,9728
+//pos2 -10241,-53,10239
+//generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
+//pos1 -10240,-53,9683
+//pos2 -9729,-53,9727
+//generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
+//pos1 -10240,-53,9728
+//pos2 -9729,-53,10239
+//generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
+//pos1 -10240,-53,10240
+//pos2 -9729,-53,10317
+//generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
+//pos1 -9728,-53,9728
+//pos2 -9683,-53,10239
+//generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
+# grand canal (+X): cut to sea floor, water to sea level, quay walls
+//pos1 -9925,-60,9993
+//pos2 -9480,-60,10007
+//set minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate
+//pos1 -9925,-59,9993
+//pos2 -9480,-55,10007
+//set minecraft:water[level=0]
+//pos1 -9925,-59,9992
+//pos2 -9480,-54,9992
+//set minecraft:stone_bricks
+//pos1 -9925,-59,10008
+//pos2 -9480,-54,10008
+//set minecraft:stone_bricks
+# temple of poseidon footprint (1 stade x 1/2 stade, §C) on the citadel plateau
+//pos1 -10015,-51,9993
+//pos2 -9985,-51,10007
+//set minecraft:gold_block
+# markers: full-height centre column (probe-robust), +X red, +Z blue at land surface
+//pos1 -10000,-59,10000
+//pos2 -10000,-44,10000
+//set minecraft:redstone_block
+//pos1 -9999,-53,10000
+//pos2 -9994,-53,10000
+//set minecraft:red_concrete
+//pos1 -10000,-53,10001
+//pos2 -10000,-53,10006
+//set minecraft:blue_concrete

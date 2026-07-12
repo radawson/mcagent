@@ -1,0 +1,8 @@
+//world scratchpad
+# Wipe the standing flat 30-scale build (core rings + old city ring + canal + markers)
+# before rebuilding the metropolis. Footprint half-width ~545 around -10000/10000.
+# Y range -60..-44 only -> the scratchpad floor (solid at Y=-61) is preserved.
+# One big //set air; the confirm-aware harness will ack the //confirm gate.
+//pos1 -10545,-60,9455
+//pos2 -9455,-44,10545
+//set air

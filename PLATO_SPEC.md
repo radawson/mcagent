@@ -22,14 +22,14 @@ Any real dimension in metres → blocks = `m × S / 185`. All tables below give 
 |---|---|---|---|---|
 | Citadel island | 5.0 ⌀ | 2.5 | 75 | 462.5 |
 | Water ring 1 | 1.0 | 3.5 | 105 | 647.5 |
-| Land ring 1 | 1.0 | 4.5 | 135 | 832.5 |
-| Water ring 2 | 2.0 | 6.5 | 195 | 1202.5 |
-| Land ring 2 | 2.0 | 8.5 | 255 | 1572.5 |
-| Water ring 3 | 3.0 | 11.5 | 345 | 2127.5 |
-| **— core city ends (⌀23 stades) —** | | | **⌀690** | **⌀4255** |
-| Outer inhabited belt | 50.0 | 61.5 | 1845 | 11377.5 |
-| Great circuit wall | (at edge) | 61.5 | 1845 | 11377.5 |
-| **— metropolis (⌀123 stades) —** | | | **⌀3690** | **⌀22755** |
+| Land ring 1 | 2.0 | 5.5 | 165 | 1017.5 |
+| Water ring 2 | 2.0 | 7.5 | 225 | 1387.5 |
+| Land ring 2 | 3.0 | 10.5 | 315 | 1942.5 |
+| Water ring 3 | 3.0 | 13.5 | 405 | 2497.5 |
+| **— core city ends (⌀27 stades) —** | | | **⌀810** | **⌀4995** |
+| Outer inhabited belt | 50.0 | 63.5 | 1905 | 11747.5 |
+| Great circuit wall | (at edge) | 63.5 | 1905 | 11747.5 |
+| **— metropolis (⌀127 stades) —** | | | **⌀3810** | **⌀23495** |
 
 Note: this **replaces** the placeholder `("city",3)` band in the current generator with the
 true belt (`r 11.5–61.5`) + great wall at `r 61.5`.
@@ -92,8 +92,8 @@ citadel gates; chiseled/polished variants for cornices. Accents are ≤5% of any
 
 - **Three circuit walls** wrapping the land zones — tri-colour stone bodies + metal facings above.
 - **Citadel**: leveled plateau with **sheer vertical cliffs** (banded tri-colour) into water ring 1.
-- **Temple of Poseidon**: centre, footprint 1 stade × 1 plethron = 185 × 30.8 m
-  (@S=185: 185×31 blocks; @S=30: 30×5). Tall ("barbaric"), interior colossus. Placeholder now.
+- **Temple of Poseidon**: centre, footprint 1 stade × ½ stade = 185 × 92.5 m (§C)
+  (@S=185: 185×92 blocks; @S=30: 30×15). Tall ("barbaric"), interior colossus. Placeholder now.
 - **Trireme tunnels**: bored through each land ring at water level so ships pass hidden between
   water rings; the tunnel roof is the surface road.
 - **Rock-cut docks**: hollowed into the inner faces of the land-ring walls.

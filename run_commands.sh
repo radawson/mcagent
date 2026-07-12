@@ -30,34 +30,38 @@ MAXWAIT="${MAXWAIT:-600}"                              # safety net; a real stal
 
 send(){ printf '%s\n' "$1" > "$SRV/console.in"; }
 mark(){ wc -l < "$LOG"; }
+# FAWE runs edits ASYNCHRONOUSLY: a per-op "look for a completion line after my snapshot" window
+# races the async flush and can miss/mis-attribute a completion. Instead we COUNT cumulative
+# completion lines since run-start and wait until the count reaches the number of heavy ops
+# dispatched. Immune to flush ordering; still pauses+flags on a genuine stall (count never catches up).
+START=$(mark)
+donecount(){ tail -n +$((START+1)) "$LOG" | grep -cE "$DONE"; }
 
-n=0
+n=0; hcount=0
 while IFS= read -r line; do
   [ -z "$line" ] && continue
   case "$line" in \#*) continue ;; esac
   n=$((n+1))
   case "$line" in
     *"//generate"*|*"//set"*|*"//paste"*)
-      b=$(mark); send "$line"
-      # FAWE gates large edits behind a "Use //confirm" prompt -- the op will NOT run until
-      # acknowledged. Poll for completion; ack the confirm once if it appears; NEVER advance on
-      # a stall (per ownership split: a timeout pauses and flags, it does not skip the op).
+      hcount=$((hcount+1)); send "$line"
+      # ack FAWE's large-edit //confirm gate once if it appears; wait until cumulative completions
+      # catch up to hcount. NEVER advance on a stall (a timeout pauses and flags, never skips).
       confirmed=0; done_ok=0; t=0
       while [ "$t" -lt "$MAXWAIT" ]; do
-        new=$(tail -n +$((b+1)) "$LOG")
-        printf '%s' "$new" | grep -Eq "$DONE" && { done_ok=1; break; }
-        if [ "$confirmed" = 0 ] && printf '%s' "$new" | grep -qi 'Use //confirm'; then
+        [ "$(donecount)" -ge "$hcount" ] && { done_ok=1; break; }
+        if [ "$confirmed" = 0 ] && tail -n 80 "$LOG" | grep -qi 'Use //confirm'; then
           send "//confirm"; confirmed=1
         fi
         sleep 1; t=$((t+1))
       done
-      res=$(tail -n +$((b+1)) "$LOG" | grep -E "$DONE" | tail -1 | sed -E 's/^\[[^]]*\][^]]*\]: //')
+      res=$(tail -n +$((START+1)) "$LOG" | grep -E "$DONE" | tail -1 | sed -E 's/^\[[^]]*\][^]]*\]: //')
       tag=""; [ "$confirmed" = 1 ] && tag=" (confirmed)"
       if [ "$done_ok" = 1 ]; then
         echo "[$n] ${line}  ->  ${res}${tag}"
       else
-        echo "[$n] ${line}  ->  !! STALLED ${t}s (confirmed=$confirmed) -- PAUSING, not advancing"
-        echo "   last server lines:"; tail -n +$((b+1)) "$LOG" | grep -viE 'Villages|Storage' | tail -4 | sed 's/^/     /'
+        echo "[$n] ${line}  ->  !! STALLED ${t}s @ op#${hcount} (have $(donecount) completions; confirmed=$confirmed) -- PAUSING"
+        echo "   last server lines:"; tail -n 6 "$LOG" | grep -viE 'Villages|Storage' | sed 's/^/     /'
         exit 2
       fi
       ;;

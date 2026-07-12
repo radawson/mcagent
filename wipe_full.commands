@@ -1,0 +1,6 @@
+//world scratchpad
+# Full wipe of the standing metropolis before rebuild with corrected radii.
+# Covers r~1920 (old r1845 + new r1905 + margin), Y -60..-44 (floor at -61 preserved).
+//pos1 -11920,-60,8080
+//pos2 -8080,-44,11920
+//set air
