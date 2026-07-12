@@ -74,6 +74,7 @@
 //pos1 -10240,-10,10240
 //pos2 -9985,-10,10462
 //generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
+#PHASE flush
 //pos1 -9984,-10,9538
 //pos2 -9729,-10,9727
 //generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=213444
@@ -171,6 +172,7 @@
 //pos1 -9728,-40,10496
 //pos2 -9473,-40,10647
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=419904&&(x+10000)^2+(z-10000)^2>213444
+#PHASE flush
 //pos1 -9472,-40,9472
 //pos2 -9353,-40,9727
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=419904&&(x+10000)^2+(z-10000)^2>213444
@@ -243,6 +245,7 @@
 //pos1 -9728,-39,9472
 //pos2 -9473,-30,9727
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=419904&&(x+10000)^2+(z-10000)^2>213444
+#PHASE flush
 //pos1 -9728,-39,9728
 //pos2 -9473,-30,9983
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=419904&&(x+10000)^2+(z-10000)^2>213444
@@ -340,6 +343,7 @@
 //pos1 -10240,-40,9216
 //pos2 -9985,-23,9471
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=1036324&&(x+10000)^2+(z-10000)^2>419904
+#PHASE flush
 //pos1 -10240,-40,10496
 //pos2 -9985,-23,10751
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=1036324&&(x+10000)^2+(z-10000)^2>419904
@@ -412,6 +416,7 @@
 //pos1 -9216,-40,9472
 //pos2 -8983,-23,9727
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=1036324&&(x+10000)^2+(z-10000)^2>419904
+#PHASE flush
 //pos1 -9216,-40,9728
 //pos2 -8983,-23,9983
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=1036324&&(x+10000)^2+(z-10000)^2>419904
@@ -484,6 +489,7 @@
 //pos1 -10496,-22,10240
 //pos2 -10241,-22,10495
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=1036324&&(x+10000)^2+(z-10000)^2>419904
+#PHASE flush
 //pos1 -10496,-22,10496
 //pos2 -10241,-22,10751
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=1036324&&(x+10000)^2+(z-10000)^2>419904
@@ -556,6 +562,7 @@
 //pos1 -9472,-22,10240
 //pos2 -9217,-22,10495
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=1036324&&(x+10000)^2+(z-10000)^2>419904
+#PHASE flush
 //pos1 -9472,-22,10496
 //pos2 -9217,-22,10751
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=1036324&&(x+10000)^2+(z-10000)^2>419904
@@ -653,6 +660,7 @@
 //pos1 -11008,-40,11008
 //pos2 -10753,-40,11263
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
+#PHASE flush
 //pos1 -10752,-40,8704
 //pos2 -10497,-40,8959
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
@@ -725,6 +733,7 @@
 //pos1 -9984,-40,11008
 //pos2 -9729,-40,11263
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
+#PHASE flush
 //pos1 -9984,-40,11264
 //pos2 -9729,-40,11387
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
@@ -797,6 +806,7 @@
 //pos1 -9216,-40,11008
 //pos2 -8961,-40,11263
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
+#PHASE flush
 //pos1 -8960,-40,8960
 //pos2 -8705,-40,9215
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
@@ -869,6 +879,7 @@
 //pos1 -11264,-39,9984
 //pos2 -11009,-30,10239
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
+#PHASE flush
 //pos1 -11264,-39,10240
 //pos2 -11009,-30,10495
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
@@ -941,6 +952,7 @@
 //pos1 -10496,-39,10752
 //pos2 -10241,-30,11007
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
+#PHASE flush
 //pos1 -10496,-39,11008
 //pos2 -10241,-30,11263
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
@@ -1013,6 +1025,7 @@
 //pos1 -9472,-39,10496
 //pos2 -9217,-30,10751
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
+#PHASE flush
 //pos1 -9472,-39,10752
 //pos2 -9217,-30,11007
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
@@ -1085,6 +1098,7 @@
 //pos1 -8704,-39,9984
 //pos2 -8613,-30,10239
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
+#PHASE flush
 //pos1 -8704,-39,10240
 //pos2 -8613,-30,10495
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=1926544&&(x+10000)^2+(z-10000)^2>1036324
@@ -1164,6 +1178,7 @@
 //pos1 -11520,-40,9984
 //pos2 -11265,-23,10239
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -11520,-40,10240
 //pos2 -11265,-23,10495
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
@@ -1236,6 +1251,7 @@
 //pos1 -11008,-40,11776
 //pos2 -10753,-23,11942
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -10752,-40,8058
 //pos2 -10497,-23,8191
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
@@ -1308,6 +1324,7 @@
 //pos1 -9984,-40,11264
 //pos2 -9729,-23,11519
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -9984,-40,11520
 //pos2 -9729,-23,11775
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
@@ -1380,6 +1397,7 @@
 //pos1 -9216,-40,11264
 //pos2 -8961,-23,11519
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -9216,-40,11520
 //pos2 -8961,-23,11775
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
@@ -1452,6 +1470,7 @@
 //pos1 -8704,-40,11008
 //pos2 -8449,-23,11263
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -8704,-40,11264
 //pos2 -8449,-23,11519
 //generate -r minecraft:stone,minecraft:andesite,minecraft:tuff (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
@@ -1524,6 +1543,7 @@
 //pos1 -11942,-22,10752
 //pos2 -11777,-22,11007
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -11776,-22,8704
 //pos2 -11521,-22,8959
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
@@ -1596,6 +1616,7 @@
 //pos1 -11264,-22,8448
 //pos2 -11009,-22,8703
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -11264,-22,8704
 //pos2 -11009,-22,8959
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
@@ -1668,6 +1689,7 @@
 //pos1 -10752,-22,11520
 //pos2 -10497,-22,11775
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -10752,-22,11776
 //pos2 -10497,-22,11942
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
@@ -1740,6 +1762,7 @@
 //pos1 -9728,-22,11264
 //pos2 -9473,-22,11519
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -9728,-22,11520
 //pos2 -9473,-22,11775
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
@@ -1812,6 +1835,7 @@
 //pos1 -8960,-22,9216
 //pos2 -8705,-22,9471
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -8960,-22,9472
 //pos2 -8705,-22,9727
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
@@ -1884,6 +1908,7 @@
 //pos1 -8448,-22,9984
 //pos2 -8193,-22,10239
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -8448,-22,10240
 //pos2 -8193,-22,10495
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3771364&&(x+10000)^2+(z-10000)^2>1926544
@@ -1987,6 +2012,7 @@
 //pos1 -12032,-40,8960
 //pos2 -11777,-40,9215
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -12032,-40,9216
 //pos2 -11777,-40,9471
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2059,6 +2085,7 @@
 //pos1 -11520,-40,8448
 //pos2 -11265,-40,8703
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -11520,-40,8704
 //pos2 -11265,-40,8959
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2131,6 +2158,7 @@
 //pos1 -10752,-40,7680
 //pos2 -10497,-40,7935
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -10752,-40,7936
 //pos2 -10497,-40,8191
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2203,6 +2231,7 @@
 //pos1 -9728,-40,7503
 //pos2 -9473,-40,7679
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -9728,-40,7680
 //pos2 -9473,-40,7935
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2275,6 +2304,7 @@
 //pos1 -8960,-40,8448
 //pos2 -8705,-40,8703
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -8960,-40,11264
 //pos2 -8705,-40,11519
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2347,6 +2377,7 @@
 //pos1 -8448,-40,11264
 //pos2 -8193,-40,11519
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -8448,-40,11520
 //pos2 -8193,-40,11775
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2419,6 +2450,7 @@
 //pos1 -7936,-40,10240
 //pos2 -7681,-40,10495
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -7936,-40,10496
 //pos2 -7681,-40,10751
 //generate -r minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2491,6 +2523,7 @@
 //pos1 -12288,-39,9216
 //pos2 -12033,-30,9471
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -12288,-39,9472
 //pos2 -12033,-30,9727
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2563,6 +2596,7 @@
 //pos1 -11776,-39,8192
 //pos2 -11521,-30,8447
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -11776,-39,8448
 //pos2 -11521,-30,8703
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2635,6 +2669,7 @@
 //pos1 -11264,-39,11520
 //pos2 -11009,-30,11775
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -11264,-39,11776
 //pos2 -11009,-30,12031
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2707,6 +2742,7 @@
 //pos1 -10240,-39,7503
 //pos2 -9985,-30,7679
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -10240,-39,7680
 //pos2 -9985,-30,7935
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2779,6 +2815,7 @@
 //pos1 -9472,-39,12288
 //pos2 -9217,-30,12497
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -9216,-39,7503
 //pos2 -8961,-30,7679
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2851,6 +2888,7 @@
 //pos1 -8704,-39,11520
 //pos2 -8449,-30,11775
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -8704,-39,11776
 //pos2 -8449,-30,12031
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -2923,6 +2961,7 @@
 //pos1 -8192,-39,10496
 //pos2 -7937,-30,10751
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
+#PHASE flush
 //pos1 -8192,-39,10752
 //pos2 -7937,-30,11007
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=6240004&&(x+10000)^2+(z-10000)^2>3771364
@@ -3068,6 +3107,7 @@
 //pos1 -9728,-15,10240
 //pos2 -9536,-15,10464
 //generate -r minecraft:cut_copper (x+10000)^2+(z-10000)^2<=215296&&(x+10000)^2+(z-10000)^2>211600
+#PHASE flush
 //pos1 -11019,-39,9728
 //pos2 -11009,-16,9983
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=1040400&&(x+10000)^2+(z-10000)^2>1032256
@@ -3140,6 +3180,7 @@
 //pos1 -9472,-39,9216
 //pos2 -9217,-16,9471
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=1040400&&(x+10000)^2+(z-10000)^2>1032256
+#PHASE flush
 //pos1 -9472,-39,10496
 //pos2 -9217,-16,10751
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=1040400&&(x+10000)^2+(z-10000)^2>1032256
@@ -3212,6 +3253,7 @@
 //pos1 -10240,-15,10752
 //pos2 -9985,-15,11007
 //generate -r minecraft:polished_diorite (x+10000)^2+(z-10000)^2<=1040400&&(x+10000)^2+(z-10000)^2>1032256
+#PHASE flush
 //pos1 -10240,-15,11008
 //pos2 -9985,-15,11019
 //generate -r minecraft:polished_diorite (x+10000)^2+(z-10000)^2<=1040400&&(x+10000)^2+(z-10000)^2>1032256
@@ -3284,6 +3326,7 @@
 //pos1 -11944,-39,10752
 //pos2 -11777,-16,11007
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3779136&&(x+10000)^2+(z-10000)^2>3763600
+#PHASE flush
 //pos1 -11776,-39,8704
 //pos2 -11521,-16,8959
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3779136&&(x+10000)^2+(z-10000)^2>3763600
@@ -3356,6 +3399,7 @@
 //pos1 -9984,-39,8056
 //pos2 -9729,-16,8191
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3779136&&(x+10000)^2+(z-10000)^2>3763600
+#PHASE flush
 //pos1 -9984,-39,11776
 //pos2 -9729,-16,11944
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3779136&&(x+10000)^2+(z-10000)^2>3763600
@@ -3428,6 +3472,7 @@
 //pos1 -8448,-39,11008
 //pos2 -8193,-16,11263
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3779136&&(x+10000)^2+(z-10000)^2>3763600
+#PHASE flush
 //pos1 -8192,-39,9216
 //pos2 -8056,-16,9471
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3779136&&(x+10000)^2+(z-10000)^2>3763600
@@ -3500,6 +3545,7 @@
 //pos1 -11264,-15,8192
 //pos2 -11009,-15,8447
 //generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=3779136&&(x+10000)^2+(z-10000)^2>3763600
+#PHASE flush
 //pos1 -11264,-15,8448
 //pos2 -11009,-15,8703
 //generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=3779136&&(x+10000)^2+(z-10000)^2>3763600
@@ -3572,6 +3618,7 @@
 //pos1 -9216,-15,11776
 //pos2 -8961,-15,11944
 //generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=3779136&&(x+10000)^2+(z-10000)^2>3763600
+#PHASE flush
 //pos1 -8960,-15,8192
 //pos2 -8705,-15,8447
 //generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=3779136&&(x+10000)^2+(z-10000)^2>3763600
@@ -3718,6 +3765,7 @@
 //pos1 -10006,-39,8982
 //pos2 -9994,-30,9352
 //set minecraft:water[level=0]
+#PHASE flush
 //pos1 -10006,-29,8982
 //pos2 -9994,-24,9352
 //set minecraft:air
@@ -3818,6 +3866,7 @@
 //pos1 -10659,-29,10240
 //pos2 -10497,-24,10495
 //generate -r minecraft:air (x+10000)^2+(z-10000)^2<=435600&&(x+10000)^2+(z-10000)^2>419904
+#PHASE flush
 //pos1 -10496,-29,9341
 //pos2 -10241,-24,9471
 //generate -r minecraft:air (x+10000)^2+(z-10000)^2<=435600&&(x+10000)^2+(z-10000)^2>419904
@@ -3890,6 +3939,7 @@
 //pos1 -11264,-39,9216
 //pos2 -11009,-30,9471
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=1960000&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -11264,-39,10496
 //pos2 -11009,-30,10751
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=1960000&&(x+10000)^2+(z-10000)^2>1926544
@@ -3962,6 +4012,7 @@
 //pos1 -9216,-39,8960
 //pos2 -8961,-30,9215
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=1960000&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -9216,-39,10752
 //pos2 -8961,-30,11007
 //generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=1960000&&(x+10000)^2+(z-10000)^2>1926544
@@ -4034,6 +4085,7 @@
 //pos1 -11008,-29,8704
 //pos2 -10753,-24,8959
 //generate -r minecraft:air (x+10000)^2+(z-10000)^2<=1960000&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -11008,-29,8960
 //pos2 -10753,-24,9215
 //generate -r minecraft:air (x+10000)^2+(z-10000)^2<=1960000&&(x+10000)^2+(z-10000)^2>1926544
@@ -4106,6 +4158,7 @@
 //pos1 -8960,-29,8960
 //pos2 -8705,-24,9215
 //generate -r minecraft:air (x+10000)^2+(z-10000)^2<=1960000&&(x+10000)^2+(z-10000)^2>1926544
+#PHASE flush
 //pos1 -8960,-29,9216
 //pos2 -8705,-24,9471
 //generate -r minecraft:air (x+10000)^2+(z-10000)^2<=1960000&&(x+10000)^2+(z-10000)^2>1926544
