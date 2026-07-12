@@ -35,7 +35,22 @@ mark(){ wc -l < "$LOG"; }
 # completion lines since run-start and wait until the count reaches the number of heavy ops
 # dispatched. Immune to flush ordering; still pauses+flags on a genuine stall (count never catches up).
 START=$(mark)
-donecount(){ tail -n +$((START+1)) "$LOG" | grep -cE "$DONE"; }
+# donecount must survive latest.log ROTATION. At S=185 FAWE volume Paper's size-based policy
+# rolls latest.log into a dated .gz mid-build; absolute line offsets then point past EOF of the
+# fresh (short) file and the count silently reads 0 -> false stall. We BANK the exact completion
+# count from each rotated-away file (re-read from its .gz) so the cumulative count spans rotations.
+# Reading the .gz keeps it exact -- under-count would re-stall, over-count would skip ops.
+BANK=0; SKIP=$START; LASTLEN=$START
+donecount(){
+  local cur; cur=$(mark)
+  if [ "$cur" -lt "$LASTLEN" ]; then                       # latest.log rolled since last poll
+    local gz; gz=$(ls -t "$SRV"/logs/*.log.gz 2>/dev/null | head -1)
+    [ -n "$gz" ] && BANK=$((BANK + $(zcat "$gz" | tail -n +$((SKIP+1)) | grep -cE "$DONE") ))
+    SKIP=0                                                  # subsequent front-file counted in full
+  fi
+  LASTLEN=$cur
+  echo $((BANK + $(tail -n +$((SKIP+1)) "$LOG" | grep -cE "$DONE") ))
+}
 
 n=0; hcount=0
 while IFS= read -r line; do
@@ -47,6 +62,7 @@ while IFS= read -r line; do
       echo "[phase] $line -- flushing save"
       b=$(mark); send "save-all flush"
       t=0; while [ "$t" -lt 180 ]; do
+        [ "$(mark)" -lt "$b" ] && b=0                       # log rolled during the save -> re-anchor
         tail -n +$((b+1)) "$LOG" | grep -q "Saved the game" && break; sleep 1; t=$((t+1))
       done
       echo "   saved (${t}s)"
@@ -67,7 +83,7 @@ while IFS= read -r line; do
         fi
         sleep 1; t=$((t+1))
       done
-      res=$(tail -n +$((START+1)) "$LOG" | grep -E "$DONE" | tail -1 | sed -E 's/^\[[^]]*\][^]]*\]: //')
+      res=$(tail -n +$((SKIP+1)) "$LOG" | grep -E "$DONE" | tail -1 | sed -E 's/^\[[^]]*\][^]]*\]: //')
       tag=""; [ "$confirmed" = 1 ] && tag=" (confirmed)"
       if [ "$done_ok" = 1 ]; then
         echo "[$n] ${line}  ->  ${res}${tag}"

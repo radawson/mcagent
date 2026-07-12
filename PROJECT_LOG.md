@@ -352,6 +352,55 @@ Cowork can write here directly and will stop using the scratch outputs folder.
   Island is already built+persisted; continue from there. [exec]: tune --phase-every off the measured
   model if flushes drift (target ~25s, hard ceiling 40s).
 
+## [design] 2026-07-11 — RESOLVED: raise the Watchdog. The config was the miscalibration, not the code.
+
+- 3rd crash. [exec] found the BOTTOM layer: `save-all flush` BLOCKS the main thread for its whole
+  duration. So even a "healthy" bounded 25s flush is a 25s TICK FREEZE. ~20 of them during a huge
+  build, stacked with concurrent FAWE work, eventually exceeds the 60s Watchdog kill. No flush cadence
+  can fix a per-flush freeze that is inherently 20-30s.
+- MY ERROR PATTERN (worth keeping): I refined three layers -- block count -> chunk count -> flush
+  granularity. Each refinement was CORRECT and each hit the next constraint down. But I kept refusing
+  the one lever that touched the binding constraint, because I framed it as "disabling the safety net".
+  WRONG FRAME. The Watchdog is a DEADLOCK detector: its job is to catch a server that has hung and will
+  never recover. A 25s save that COMPLETES is not a hang. The 60s default is tuned for gameplay ticks,
+  not for a legitimate admin op on a large multi-world save. Raising it doesn't hide a bug -- it stops
+  a liveness detector from misclassifying honest work. Sometimes the miscalibration is in the CONFIG.
+- DECISION (Rick pre-authorized: "try staged saves first, and if that still breaks the watchdog, we can
+  relax the settings"). Trigger fired. Plan:
+  1. spigot.yml `settings.timeout-time: 300` (NOT -1 -- raise, don't disable; still catches a true
+     deadlock, 10x headroom over the worst observed ~30s freeze). Restart.
+  2. KEEP the bounded flushes (--phase-every 24). They cap each freeze at ~25s (server stays broadly
+     responsive) and persist progress incrementally, so a failure costs one interval, not the build.
+  3. The harness's own stall-detection (pause-and-flag) stays armed -- that is the real in-build guard,
+     independent of the Watchdog.
+  4. Re-run from the island. Then RESTORE timeout-time: 60 and restart.
+- Lesson for the belt/future scale-ups: budget the save cost up front. Model: ~7s + chunks/200, and
+  every flush is a main-thread freeze of that length.
+
+## [design] 2026-07-12 — RECORD CORRECTION (2 crashes, not 3) + log-rotation bug + belt save budget
+
+- CORRECTION to my entry above: there were **TWO** Watchdog crashes, not three. Getting this right
+  matters because each has a DIFFERENT fix; folding them together would have us "fixing" a save path
+  that was never broken.
+    1. CRASH (real): 309M-block wipe -> 75s save > 60s Watchdog.        Fix: no wipe.
+    2. CRASH (real): bounded-flush save STILL >60s stacked w/ FAWE work. Fix: Watchdog -> 300.
+    3. NOT A CRASH: server was healthy throughout; 21 ops were on disk before the harness cried stall.
+- BUG 3 (exec, fixed): Paper's size-based rotation rolled `latest.log` mid-build. The harness's
+  cumulative completion counter used an ABSOLUTE line offset, which pointed past EOF of the fresh
+  (short) file -> count read 0 -> FALSE STALL. Fix: bank the EXACT completion count from each
+  rotated-away `.gz` so the count spans rotations (estimating is unsafe: under-count re-stalls,
+  over-count silently skips ops). VALIDATED IN FLIGHT: rotation 2026-07-12-13.log.gz fired at
+  18:03:03 and the build counted straight through it (ops #91/#94/#97 completed post-roll).
+- BUG CLASS worth remembering: **state that assumes a stable frame of reference underneath it.** Same
+  family as the earlier per-op log-snapshot race (fixed with a cumulative counter) -- then the
+  cumulative counter itself assumed the log never moves. Ask "what is my offset relative to, and can
+  that move?"
+- BELT SAVE BUDGET (banked, do not lose): `--phase-every 24` was sized for a 60s Watchdog. With the
+  Watchdog at 300, it is OVER-CONSERVATIVE: 64 saves x ~7s fixed baseline = ~7.5 min of pure overhead
+  to cap freezes at 25s when we have 300s of headroom. For the BELT (dirty-chunk count ~20x worse),
+  raise --phase-every substantially -- size each flush to land comfortably under ~200s (not 25s) using
+  the measured model (~7s + chunks/200). Fewer, fatter flushes are strictly cheaper.
+
 ## [exec] 2026-07-12 — Temple of Poseidon pasted on citadel (schematic engine) + Offset fix
 
 - temple_gen.py DATA_VERSION=4790 CONFIRMED correct (version.json world_version=4790, level.dat=4790;
