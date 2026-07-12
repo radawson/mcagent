@@ -1,0 +1,7 @@
+{
+  "__comment": "pack_format is version-specific. Set to match your server's MC version (README lists how). Using a modern value; adjust if the client rejects the pack.",
+  "pack": {
+    "pack_format": 46,
+    "description": "Atlantis — Triremes (v1)"
+  }
+}

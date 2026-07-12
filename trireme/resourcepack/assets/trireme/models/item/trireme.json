@@ -1,0 +1,89 @@
+{
+  "__comment": "Stylized low-poly trireme, v1. Uses vanilla block textures (no custom PNGs). Length along +X, bow at +X. 16 units = 1 block; model spans x -16..32 (3 blocks) -> scale up via the item_display transformation. Tune shapes in Blockbench (open this file directly).",
+  "textures": {
+    "hull": "minecraft:block/spruce_planks",
+    "deck": "minecraft:block/dark_oak_planks",
+    "sail": "minecraft:block/white_wool",
+    "mast": "minecraft:block/stripped_oak_log",
+    "ram": "minecraft:block/gold_block",
+    "particle": "minecraft:block/spruce_planks"
+  },
+  "elements": [
+    {
+      "name": "hull",
+      "from": [-14, 4, 5], "to": [27, 9, 11],
+      "faces": {
+        "north": {"texture": "#hull"}, "south": {"texture": "#hull"},
+        "east": {"texture": "#hull"}, "west": {"texture": "#hull"},
+        "up": {"texture": "#deck"}, "down": {"texture": "#hull"}
+      }
+    },
+    {
+      "name": "ram",
+      "from": [27, 4, 6.5], "to": [32, 7, 9.5],
+      "faces": {
+        "north": {"texture": "#ram"}, "south": {"texture": "#ram"},
+        "east": {"texture": "#ram"}, "west": {"texture": "#ram"},
+        "up": {"texture": "#ram"}, "down": {"texture": "#ram"}
+      }
+    },
+    {
+      "name": "bow_riser",
+      "from": [23, 9, 5.5], "to": [27, 12, 10.5],
+      "faces": {
+        "north": {"texture": "#hull"}, "south": {"texture": "#hull"},
+        "east": {"texture": "#hull"}, "west": {"texture": "#hull"},
+        "up": {"texture": "#hull"}, "down": {"texture": "#hull"}
+      }
+    },
+    {
+      "name": "stern_post",
+      "from": [-16, 9, 5.5], "to": [-12, 15, 10.5],
+      "rotation": {"origin": [-14, 9, 8], "axis": "z", "angle": 22.5},
+      "faces": {
+        "north": {"texture": "#hull"}, "south": {"texture": "#hull"},
+        "east": {"texture": "#hull"}, "west": {"texture": "#hull"},
+        "up": {"texture": "#hull"}, "down": {"texture": "#hull"}
+      }
+    },
+    {
+      "name": "deck",
+      "from": [-12, 9, 5], "to": [23, 10, 11],
+      "faces": {
+        "north": {"texture": "#deck"}, "south": {"texture": "#deck"},
+        "east": {"texture": "#deck"}, "west": {"texture": "#deck"},
+        "up": {"texture": "#deck"}, "down": {"texture": "#deck"}
+      }
+    },
+    {
+      "name": "mast",
+      "from": [4, 10, 7.5], "to": [6, 30, 9.5],
+      "faces": {
+        "north": {"texture": "#mast"}, "south": {"texture": "#mast"},
+        "east": {"texture": "#mast"}, "west": {"texture": "#mast"},
+        "up": {"texture": "#mast"}, "down": {"texture": "#mast"}
+      }
+    },
+    {
+      "name": "yard",
+      "from": [4, 26, 3], "to": [6, 27, 13],
+      "faces": {
+        "north": {"texture": "#mast"}, "south": {"texture": "#mast"},
+        "east": {"texture": "#mast"}, "west": {"texture": "#mast"},
+        "up": {"texture": "#mast"}, "down": {"texture": "#mast"}
+      }
+    },
+    {
+      "name": "sail",
+      "from": [4.5, 15, 3], "to": [5.5, 26, 13],
+      "faces": {
+        "north": {"texture": "#sail"}, "south": {"texture": "#sail"},
+        "east": {"texture": "#sail"}, "west": {"texture": "#sail"},
+        "up": {"texture": "#sail"}, "down": {"texture": "#sail"}
+      }
+    }
+  ],
+  "display": {
+    "fixed": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]}
+  }
+}

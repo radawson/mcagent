@@ -1,0 +1,7 @@
+{
+  "__comment": "Datapack pack_format is version-specific; adjust to your MC version if /reload complains.",
+  "pack": {
+    "pack_format": 48,
+    "description": "Atlantis — Trireme rig (v1)"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "__comment": "Item definition (1.21.4+ item-model system). Referenced by the item_model component value 'trireme:trireme'. If your server predates the items/ definition system, delete this file and instead put a custom_model_data override on a vanilla item's model (see README).",
+  "model": {
+    "type": "minecraft:model",
+    "model": "trireme:item/trireme"
+  }
+}

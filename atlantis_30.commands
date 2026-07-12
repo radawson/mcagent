@@ -1,11 +1,12 @@
 //world scratchpad
 # Atlantis @ 30 b/stade | core r=405 | metropolis r=1905 | TILE=512
+# vertical: floor -60 | sea -55 (depth 5) | land -54 | citadel -52 | wall -53 | great -52
 # zone island  r=0..75
 //pos1 -10075,-60,9925
-//pos2 -9925,-54,10075
-//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=5625
-//pos1 -10075,-53,9925
 //pos2 -9925,-53,10075
+//generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=5625
+//pos1 -10075,-52,9925
+//pos2 -9925,-52,10075
 //generate -r minecraft:smooth_stone (x+10000)^2+(z-10000)^2<=5625
 # zone water  r=75..105
 //pos1 -10105,-60,9895
@@ -477,240 +478,243 @@
 //generate -r minecraft:grass_block (x+10000)^2+(z-10000)^2<=3629025&&(x+10000)^2+(z-10000)^2>164025
 # circuit walls (orichalcum / tin / brass) + land-1 parapet
 //pos1 -10077,-59,9923
-//pos2 -9923,-51,10077
+//pos2 -9923,-54,10077
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=5929&&(x+10000)^2+(z-10000)^2>5329
-//pos1 -10077,-50,9923
-//pos2 -9923,-50,10077
+//pos1 -10077,-53,9923
+//pos2 -9923,-53,10077
 //generate -r minecraft:cut_copper (x+10000)^2+(z-10000)^2<=5929&&(x+10000)^2+(z-10000)^2>5329
 //pos1 -10167,-59,9833
-//pos2 -9833,-51,10167
+//pos2 -9833,-54,10167
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=27889&&(x+10000)^2+(z-10000)^2>26569
-//pos1 -10167,-50,9833
-//pos2 -9833,-50,10167
+//pos1 -10167,-53,9833
+//pos2 -9833,-53,10167
 //generate -r minecraft:polished_diorite (x+10000)^2+(z-10000)^2<=27889&&(x+10000)^2+(z-10000)^2>26569
 //pos1 -10317,-59,9728
-//pos2 -10241,-51,10239
+//pos2 -10241,-54,10239
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
 //pos1 -10240,-59,9683
-//pos2 -9729,-51,9727
+//pos2 -9729,-54,9727
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
 //pos1 -10240,-59,9728
-//pos2 -9729,-51,10239
+//pos2 -9729,-54,10239
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
 //pos1 -10240,-59,10240
-//pos2 -9729,-51,10317
+//pos2 -9729,-54,10317
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
 //pos1 -9728,-59,9728
-//pos2 -9683,-51,10239
+//pos2 -9683,-54,10239
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
-//pos1 -10317,-50,9728
-//pos2 -10241,-50,10239
+//pos1 -10317,-53,9728
+//pos2 -10241,-53,10239
 //generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
-//pos1 -10240,-50,9683
-//pos2 -9729,-50,9727
+//pos1 -10240,-53,9683
+//pos2 -9729,-53,9727
 //generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
-//pos1 -10240,-50,9728
-//pos2 -9729,-50,10239
+//pos1 -10240,-53,9728
+//pos2 -9729,-53,10239
 //generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
-//pos1 -10240,-50,10240
-//pos2 -9729,-50,10317
+//pos1 -10240,-53,10240
+//pos2 -9729,-53,10317
 //generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
-//pos1 -9728,-50,9728
-//pos2 -9683,-50,10239
+//pos1 -9728,-53,9728
+//pos2 -9683,-53,10239
 //generate -r minecraft:iron_block (x+10000)^2+(z-10000)^2<=100489&&(x+10000)^2+(z-10000)^2>97969
 //pos1 -11909,-59,9216
-//pos2 -11777,-50,9727
+//pos2 -11777,-53,9727
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -11909,-59,9728
-//pos2 -11777,-50,10239
+//pos2 -11777,-53,10239
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -11909,-59,10240
-//pos2 -11777,-50,10751
+//pos2 -11777,-53,10751
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -11776,-59,8192
-//pos2 -11265,-50,8703
+//pos2 -11265,-53,8703
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -11776,-59,8704
-//pos2 -11265,-50,9215
+//pos2 -11265,-53,9215
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -11776,-59,9216
-//pos2 -11265,-50,9727
+//pos2 -11265,-53,9727
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -11776,-59,10240
-//pos2 -11265,-50,10751
+//pos2 -11265,-53,10751
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -11776,-59,10752
-//pos2 -11265,-50,11263
+//pos2 -11265,-53,11263
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -11776,-59,11264
-//pos2 -11265,-50,11775
+//pos2 -11265,-53,11775
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -11264,-59,8192
-//pos2 -10753,-50,8703
+//pos2 -10753,-53,8703
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -11264,-59,11264
-//pos2 -10753,-50,11775
+//pos2 -10753,-53,11775
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -10752,-59,8091
-//pos2 -10241,-50,8191
+//pos2 -10241,-53,8191
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -10752,-59,8192
-//pos2 -10241,-50,8703
+//pos2 -10241,-53,8703
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -10752,-59,11264
-//pos2 -10241,-50,11775
+//pos2 -10241,-53,11775
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -10752,-59,11776
-//pos2 -10241,-50,11909
+//pos2 -10241,-53,11909
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -10240,-59,8091
-//pos2 -9729,-50,8191
+//pos2 -9729,-53,8191
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -10240,-59,11776
-//pos2 -9729,-50,11909
+//pos2 -9729,-53,11909
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -9728,-59,8091
-//pos2 -9217,-50,8191
+//pos2 -9217,-53,8191
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -9728,-59,8192
-//pos2 -9217,-50,8703
+//pos2 -9217,-53,8703
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -9728,-59,11264
-//pos2 -9217,-50,11775
+//pos2 -9217,-53,11775
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -9728,-59,11776
-//pos2 -9217,-50,11909
+//pos2 -9217,-53,11909
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -9216,-59,8192
-//pos2 -8705,-50,8703
+//pos2 -8705,-53,8703
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -9216,-59,11264
-//pos2 -8705,-50,11775
+//pos2 -8705,-53,11775
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -8704,-59,8192
-//pos2 -8193,-50,8703
+//pos2 -8193,-53,8703
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -8704,-59,8704
-//pos2 -8193,-50,9215
+//pos2 -8193,-53,9215
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -8704,-59,9216
-//pos2 -8193,-50,9727
+//pos2 -8193,-53,9727
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -8704,-59,10240
-//pos2 -8193,-50,10751
+//pos2 -8193,-53,10751
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -8704,-59,10752
-//pos2 -8193,-50,11263
+//pos2 -8193,-53,11263
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -8704,-59,11264
-//pos2 -8193,-50,11775
+//pos2 -8193,-53,11775
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -8192,-59,9216
-//pos2 -8091,-50,9727
+//pos2 -8091,-53,9727
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -8192,-59,9728
-//pos2 -8091,-50,10239
+//pos2 -8091,-53,10239
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
 //pos1 -8192,-59,10240
-//pos2 -8091,-50,10751
+//pos2 -8091,-53,10751
 //generate -r minecraft:calcite,minecraft:granite,minecraft:blackstone (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -11909,-49,9216
-//pos2 -11777,-49,9727
+//pos1 -11909,-52,9216
+//pos2 -11777,-52,9727
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -11909,-49,9728
-//pos2 -11777,-49,10239
+//pos1 -11909,-52,9728
+//pos2 -11777,-52,10239
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -11909,-49,10240
-//pos2 -11777,-49,10751
+//pos1 -11909,-52,10240
+//pos2 -11777,-52,10751
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -11776,-49,8192
-//pos2 -11265,-49,8703
+//pos1 -11776,-52,8192
+//pos2 -11265,-52,8703
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -11776,-49,8704
-//pos2 -11265,-49,9215
+//pos1 -11776,-52,8704
+//pos2 -11265,-52,9215
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -11776,-49,9216
-//pos2 -11265,-49,9727
+//pos1 -11776,-52,9216
+//pos2 -11265,-52,9727
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -11776,-49,10240
-//pos2 -11265,-49,10751
+//pos1 -11776,-52,10240
+//pos2 -11265,-52,10751
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -11776,-49,10752
-//pos2 -11265,-49,11263
+//pos1 -11776,-52,10752
+//pos2 -11265,-52,11263
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -11776,-49,11264
-//pos2 -11265,-49,11775
+//pos1 -11776,-52,11264
+//pos2 -11265,-52,11775
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -11264,-49,8192
-//pos2 -10753,-49,8703
+//pos1 -11264,-52,8192
+//pos2 -10753,-52,8703
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -11264,-49,11264
-//pos2 -10753,-49,11775
+//pos1 -11264,-52,11264
+//pos2 -10753,-52,11775
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -10752,-49,8091
-//pos2 -10241,-49,8191
+//pos1 -10752,-52,8091
+//pos2 -10241,-52,8191
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -10752,-49,8192
-//pos2 -10241,-49,8703
+//pos1 -10752,-52,8192
+//pos2 -10241,-52,8703
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -10752,-49,11264
-//pos2 -10241,-49,11775
+//pos1 -10752,-52,11264
+//pos2 -10241,-52,11775
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -10752,-49,11776
-//pos2 -10241,-49,11909
+//pos1 -10752,-52,11776
+//pos2 -10241,-52,11909
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -10240,-49,8091
-//pos2 -9729,-49,8191
+//pos1 -10240,-52,8091
+//pos2 -9729,-52,8191
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -10240,-49,11776
-//pos2 -9729,-49,11909
+//pos1 -10240,-52,11776
+//pos2 -9729,-52,11909
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -9728,-49,8091
-//pos2 -9217,-49,8191
+//pos1 -9728,-52,8091
+//pos2 -9217,-52,8191
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -9728,-49,8192
-//pos2 -9217,-49,8703
+//pos1 -9728,-52,8192
+//pos2 -9217,-52,8703
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -9728,-49,11264
-//pos2 -9217,-49,11775
+//pos1 -9728,-52,11264
+//pos2 -9217,-52,11775
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -9728,-49,11776
-//pos2 -9217,-49,11909
+//pos1 -9728,-52,11776
+//pos2 -9217,-52,11909
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -9216,-49,8192
-//pos2 -8705,-49,8703
+//pos1 -9216,-52,8192
+//pos2 -8705,-52,8703
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -9216,-49,11264
-//pos2 -8705,-49,11775
+//pos1 -9216,-52,11264
+//pos2 -8705,-52,11775
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -8704,-49,8192
-//pos2 -8193,-49,8703
+//pos1 -8704,-52,8192
+//pos2 -8193,-52,8703
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -8704,-49,8704
-//pos2 -8193,-49,9215
+//pos1 -8704,-52,8704
+//pos2 -8193,-52,9215
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -8704,-49,9216
-//pos2 -8193,-49,9727
+//pos1 -8704,-52,9216
+//pos2 -8193,-52,9727
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -8704,-49,10240
-//pos2 -8193,-49,10751
+//pos1 -8704,-52,10240
+//pos2 -8193,-52,10751
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -8704,-49,10752
-//pos2 -8193,-49,11263
+//pos1 -8704,-52,10752
+//pos2 -8193,-52,11263
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -8704,-49,11264
-//pos2 -8193,-49,11775
+//pos1 -8704,-52,11264
+//pos2 -8193,-52,11775
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -8192,-49,9216
-//pos2 -8091,-49,9727
+//pos1 -8192,-52,9216
+//pos2 -8091,-52,9727
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -8192,-49,9728
-//pos2 -8091,-49,10239
+//pos1 -8192,-52,9728
+//pos2 -8091,-52,10239
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-//pos1 -8192,-49,10240
-//pos2 -8091,-49,10751
+//pos1 -8192,-52,10240
+//pos2 -8091,-52,10751
 //generate -r minecraft:gold_block (x+10000)^2+(z-10000)^2<=3644281&&(x+10000)^2+(z-10000)^2>3613801
-# grand canal (+X) + walls
+# grand canal (+X): cut to sea floor, water to sea level, quay walls
+//pos1 -9925,-60,9993
+//pos2 -7975,-60,10007
+//set minecraft:tuff,minecraft:cobbled_deepslate,minecraft:deepslate
 //pos1 -9925,-59,9993
 //pos2 -7975,-55,10007
 //set minecraft:water[level=0]
@@ -720,13 +724,13 @@
 //pos1 -9925,-59,10008
 //pos2 -7975,-54,10008
 //set minecraft:stone_bricks
-# temple of poseidon footprint (1 stade x 1/2 stade, §C)
-//pos1 -10015,-52,9993
-//pos2 -9985,-52,10007
+# temple of poseidon footprint (1 stade x 1/2 stade, §C) on the citadel plateau
+//pos1 -10015,-51,9993
+//pos2 -9985,-51,10007
 //set minecraft:gold_block
-# markers: centre column, +X red, +Z blue
-//pos1 -10000,-52,10000
-//pos2 -10000,-45,10000
+# markers: full-height centre column (probe-robust), +X red, +Z blue at land surface
+//pos1 -10000,-59,10000
+//pos2 -10000,-44,10000
 //set minecraft:redstone_block
 //pos1 -9999,-53,10000
 //pos2 -9994,-53,10000
