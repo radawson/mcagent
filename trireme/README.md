@@ -18,8 +18,9 @@ trireme/
 
 ## Install
 
-**Datapack** — copy `datapack/` into `<server>/<world>/datapacks/trireme/` then `/reload`
-(our test world is `scratchpad`, so `<server>/scratchpad/datapacks/trireme/`).
+**Datapack** — datapacks load per **save**, not per dimension. `scratchpad` is a dimension folder,
+so put this in the actual world save: `<server>/whirled/datapacks/trireme/` then `/reload`.
+Functions are global, so `/function trireme:summon` still works while you're in scratchpad.
 
 **Resource pack (server auto-push, chosen)** — zip the *contents* of `resourcepack/` (so `pack.mcmeta`
 is at the zip root), host it somewhere the clients can reach, and in `server.properties`:

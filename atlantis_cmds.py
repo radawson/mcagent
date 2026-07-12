@@ -14,7 +14,7 @@ off a sea-level datum; build floor pinned to Y=-60 at every S. Relief: water/can
 land rings +8 m above sea, citadel a +20 m cliff-sided plateau, walls above that. Solid fills produce
 the cliffs and quays.
 
-DEFERRED: trireme tunnels, rock-cut docks, raised bridges, racecourse, full temple + colossus.
+DEFERRED: racecourse, full temple + colossus (tunnels, bridges, docks now emitted).
 --maxr <blocks> caps build radius for a fast smoke test.
 
 SCALE NOTE: solid land/water fills are fine at S=30 (thin). At S=185 they explode (~1e10+ blocks) ->
@@ -167,9 +167,50 @@ def emit(cfg, maxr=None):
     setbox(x_start, yf + 1, cz - w - 1, x_end, y_land, cz - w - 1, PAL["canal_wall"])
     setbox(x_start, yf + 1, cz + w + 1, x_end, y_land, cz + w + 1, PAL["canal_wall"])
 
-    add("# temple of poseidon footprint (1 stade x 1/2 stade, §C) on the citadel plateau")
-    thl, thw = S // 2, S // 4
-    setbox(cx - thl, y_isle + 1, cz - thw, cx + thl, y_isle + 1, cz + thw, PAL["temple_gold"])
+    # --- radial passages: trireme tunnels through land rings + bridges over water rings (§B) ---
+    # "leaving room for a single trireme to pass...covered over so as to leave a way underneath".
+    # +X is the open grand canal; the other three cardinals carry roofed tunnels + bridged roads.
+    if cfg.get("passages", True) and (maxr is None or maxr >= int(r_w3)):
+        add("# radial passages: tunnels (land rings, roofed) + bridges (water rings)")
+        tun_hw = max(2, cfg["canal_w"] - 1)
+        road_hw = max(2, round(S / 12))
+        headroom = m2b(6)
+        bridge_y = sea + m2b(10)
+        water_rings = [(r_isl, r_w1), (r_l1, r_w2), (r_l2, r_w3)]
+        land_rings = [(r_w1, r_l1), (r_w2, r_l2)]
+
+        def radbox(dx, dz, r0, r1, hw, y0, y1, block):
+            if dx != 0:
+                xa, xb = sorted((cx + dx * r0, cx + dx * r1))
+                setbox(xa, y0, cz - hw, xb, y1, cz + hw, block)
+            else:
+                za, zb = sorted((cz + dz * r0, cz + dz * r1))
+                setbox(cx - hw, y0, za, cx + hw, y1, zb, block)
+
+        for dx, dz in [(-1, 0), (0, 1), (0, -1)]:
+            for ri, ro in land_rings:                                    # tunnel through the land
+                radbox(dx, dz, ri, ro, tun_hw, yf, yf, PAL["found"])            # channel floor
+                radbox(dx, dz, ri, ro, tun_hw, yf + 1, sea, PAL["canal"])       # water to sea level
+                radbox(dx, dz, ri, ro, tun_hw, sea + 1, sea + headroom, "minecraft:air")  # ship headroom (land above = roof)
+                radbox(dx, dz, ri, ro, road_hw, y_land, y_land, "minecraft:smooth_stone")  # road across the roof
+            for ri, ro in water_rings:                                   # bridge over the water
+                radbox(dx, dz, ri, ro, road_hw, bridge_y, bridge_y, "minecraft:stone_bricks")
+
+    # --- rock-cut docks: covered moorage galleries in the land-ring inner quay faces (§B) ---
+    # "as they quarried, they hollowed out double docks, having roofs formed out of the native rock."
+    # v1: inner (unwalled) faces of L1 & L2 -> water slip + covered headroom, land above = roof.
+    # (outer faces + under-island docks deferred: they'd undercut the circuit walls; thread later.)
+    if cfg.get("docks", True) and (maxr is None or maxr >= int(r_w3)):
+        add("# rock-cut docks: covered water galleries under the inner face of each land ring")
+        dock_depth = m2b(12)
+        dock_head = m2b(6)
+        for ri in (r_w1, r_w2):                                   # inner edge of L1, L2
+            annulus(ri, ri + dock_depth, yf + 1, sea, PAL["canal"])                   # moorage water
+            annulus(ri, ri + dock_depth, sea + 1, sea + dock_head, "minecraft:air")   # covered slip
+
+    # Temple of Poseidon: NOT emitted here. It is a handcrafted schematic (temple_gen.py -> .schem,
+    # pasted with //paste -o) per TEMPLE_SPEC.md -- "bulk by math, detail by schematic".
+    # The old gold-slab placeholder is retired; build the city, then paste the temple on top.
 
     add("# markers: full-height centre column (probe-robust), +X red, +Z blue at land surface")
     setbox(cx, yf + 1, cz, cx, y_isle + 8, cz, "minecraft:redstone_block")

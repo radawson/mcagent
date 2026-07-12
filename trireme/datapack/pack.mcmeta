@@ -1,7 +1,7 @@
 {
-  "__comment": "Datapack pack_format is version-specific; adjust to your MC version if /reload complains.",
+  "__comment": "Pinned to MC v26 (26.1.x). data pack_format 101 per paper-current.jar version.json. No back-compat.",
   "pack": {
-    "pack_format": 48,
+    "pack_format": 101,
     "description": "Atlantis — Trireme rig (v1)"
   }
 }

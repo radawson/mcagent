@@ -1,0 +1,28 @@
+//world scratchpad
+# rock-cut docks: covered water galleries under the inner face of each land ring
+//pos1 -10107,-59,9893
+//pos2 -9893,-55,10107
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=11449&&(x+10000)^2+(z-10000)^2>11025
+//pos1 -10107,-54,9893
+//pos2 -9893,-54,10107
+//generate -r minecraft:air (x+10000)^2+(z-10000)^2<=11449&&(x+10000)^2+(z-10000)^2>11025
+//pos1 -10227,-59,9773
+//pos2 -9773,-55,10227
+//generate -r minecraft:water[level=0] (x+10000)^2+(z-10000)^2<=51529&&(x+10000)^2+(z-10000)^2>50625
+//pos1 -10227,-54,9773
+//pos2 -9773,-54,10227
+//generate -r minecraft:air (x+10000)^2+(z-10000)^2<=51529&&(x+10000)^2+(z-10000)^2>50625
+# temple of poseidon footprint (1 stade x 1/2 stade, §C) on the citadel plateau
+//pos1 -10015,-51,9993
+//pos2 -9985,-51,10007
+//set minecraft:gold_block
+# markers: full-height centre column (probe-robust), +X red, +Z blue at land surface
+//pos1 -10000,-59,10000
+//pos2 -10000,-44,10000
+//set minecraft:redstone_block
+//pos1 -9999,-53,10000
+//pos2 -9994,-53,10000
+//set minecraft:red_concrete
+//pos1 -10000,-53,10001
+//pos2 -10000,-53,10006
+//set minecraft:blue_concrete

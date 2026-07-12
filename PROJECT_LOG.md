@@ -204,3 +204,59 @@ Cowork can write here directly and will stop using the scratch outputs folder.
   re-rendering the new build (~72 tiles/s). Map: http://10.10.12.5:8100 -> "scratchpad (metropolis)".
 - Standing exec workflow for future rebuilds: pregen(if radius grew) -> wipe_full -> build ->
   verify -> save-all flush -> bluemap purge+update scratchpad.
+
+## [design] 2026-07-11 — trireme tunnels + bridges emitted; trireme rig path fixed
+
+- atlantis_cmds.py: added radial passages (§B). On the 3 cardinals that AREN'T the +X grand canal,
+  each land ring gets a roofed trireme tunnel (channel floor -> water to sea -> ship headroom carved
+  as air -> leftover land = roof -> smooth_stone road across the top), and each water ring gets a
+  stone-brick bridge deck at sea+10m clearance. Parametric: real tunnels at S=185, token slots at S=30
+  (only ~1 block between sea and land surface at maquette scale -- structure present, effect at 185).
+  Params: tunnel half-width canal_w-1, road half-width ~S/12, headroom 6m, bridge clearance 10m.
+  Toggle via CFG "passages" (default on); auto-skipped when maxr < r_w3 (smoke builds).
+- HANDOFF to [exec]: rebuild to see passages (wipe_full -> build). Verify headless via block probes:
+  e.g. on -X axis through land1, expect water at sea level and air above it (the tunnel), road at land
+  surface; bridge deck (stone_bricks) over each water ring at bridge_y. Report a couple of probes.
+- Trireme rig: README datapack path corrected to whirled/datapacks/ (per [exec]: datapacks load per
+  save; scratchpad is a dimension). Plan endorsed: install datapack + summon + dump item_display
+  transform telemetry so we tune scale/translation from real numbers; HOLD the server-wide resource
+  pack until Rick gives an explicit go with the visual in front of him. pack_format set to 61 by [exec].
+
+## [design] 2026-07-11 — rock-cut docks emitted; tunnel-depth question answered
+
+- Tunnel DEPTH (Rick's check): already full sea-depth. Tunnel channel floor is pinned to yf=-60 with
+  water to sea level -> 5 deep @S=30, 30 @S=185. Scales. The tight dim is HEADROOM (mast clearance):
+  1 @S=30, 6 @S=185; raise tunnel roofs later if a full-scale mast needs >6.
+- atlantis_cmds.py: rock-cut docks added -- covered water galleries carved into the INNER (unwalled)
+  quay face of land rings L1 & L2 (moorage water yf+1..sea, covered slip air sea+1..sea+m2b(6), land
+  above = roof). depth m2b(12) = 2 @S=30 / 12 @S=185. Outer-face + under-island docks deferred (would
+  undercut circuit walls; thread around them later).
+- HANDOFF to [exec]: rebuild + probe the docks: on any axis, just inside r_w1 (105) and r_w2 (225),
+  expect water at sea level with air above (the covered slip) rather than solid land.
+- NEXT (design): the full Temple of Poseidon (1x1/2 stade, silver walls/gold pinnacles, orichalcum
+  interior, colossus) -- replacing the gold-slab placeholder. Then racecourse. Then S=185 fill-opt.
+
+## [design] 2026-07-11 — Temple of Poseidon: spec + generator (schematic engine returns)
+
+- TEMPLE_SPEC.md added. Style (Rick): EGYPTO-BARBARIC. Rationale is forced by Plato's own numbers:
+  1 x 1/2 stade = 185 x 92.5 m (~17,100 m2) = ~2x the largest Greek temple ever (Artemis at Ephesus
+  129.5x68.6) and ~8x the Parthenon; the real Poseidon temple at Sounion is 31x13.4. No ancient roof
+  spans 92 m -> the interior MUST be a hypostyle forest, which is what Plato says ("walls and PILLARS
+  and floor... coated with orichalcum"). Only precedent at that scale is Egyptian (Karnak, 134 cols),
+  and Solon got the tale from Egyptian priests. "Strange barbaric appearance" = not Greek.
+- temple_gen.py added: emits a Sponge v2 .schem via a SELF-CONTAINED stdlib NBT writer (no pip deps;
+  DATA_VERSION=4790 -- [exec] please confirm against paper-current version.json). WEOffset = absolute
+  min corner so `//paste -o` lands it exactly, reusing the POC's proven headless paste path.
+- Plan (entrance +X, facing the grand canal): PYLON (twin towers, gold pinnacles) -> PERISTYLE COURT
+  (open sky, altar, 10 kings + 10 wives in gold) -> HYPOSTYLE HALL (column grid, raised nave +
+  open clerestory, ivory roof) -> SANCTUARY (colossus, 100 Nereids, Cleito's SEALED gold shrine,
+  orichalcum laws pillar). ~105 columns @S=185.
+- Orichalcum = **waxed** copper (waxed_cut_copper / waxed_copper_block). Correctness, not decor:
+  unwaxed copper oxidises green and would destroy the "flashed with red light" reading.
+- atlantis_cmds.py: gold-slab temple placeholder RETIRED (temple is now a schematic).
+- HONEST NOTE: colossus + Nereids are abstract MASSING (correctly scaled, blocky). Procedural statuary
+  always loses to a hand-sculpt -- treat as placeholders. The architecture is where procgen wins.
+- HANDOFF to [exec]: `python3 temple_gen.py --scale 30 --out temple.schem`, scp to the FAWE schematics
+  dir, then `//world scratchpad` ; `//schem load temple` ; `//paste -o -a`. Probe: pylon silver at the
+  +X end, gold pinnacle course on top, orichalcum columns in the hypostyle, gold mass in the sanctuary.
+  NB the city's centre marker column still runs up through the temple -- harmless, harness needs it.
