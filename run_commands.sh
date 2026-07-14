@@ -25,7 +25,7 @@ ssh "${SSH_ALIAS}" SRV="$SRV" WORLD="$WORLD" PX="$PX" PY="$PY" PZ="$PZ" bash -s 
 set -uo pipefail
 LOG="$SRV/logs/latest.log"
 DIM="minecraft:${WORLD}"
-DONE='Operation completed|blocks have been created'   # //set AND //generate
+DONE='Operation completed|blocks have been created|has been pasted'   # //set, //generate, AND //paste
 MAXWAIT="${MAXWAIT:-600}"                              # safety net; a real stall pauses+flags
 
 send(){ printf '%s\n' "$1" > "$SRV/console.in"; }

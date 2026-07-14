@@ -51,13 +51,50 @@ Reading notes at the bottom flag every place they currently diverge.
 > six winged horses — **and of such a size that he touched the roof of the building with his head;
 > around him there were a hundred Nereids riding on dolphins**..."
 
-## §D — Springs, baths, grove, racecourse, guardhouses
+## §D — THE RING PROGRAMME (restored in full)
 
-> "...they had **fountains, one of cold and another of hot water** ... they made **cisterns** ... warm
-> baths ... **the grove of Poseidon**, where were growing all manner of trees of wonderful height ...
-> conveyed by **aqueducts along the bridges to the outer circles** ... in the centre of the larger of
-> the two [land rings] there was set apart **a race-course of a stadium in width, and in length allowed
-> to extend all round the island, for horses to race in.** Also there were **guardhouses at intervals**..."
+**This section was previously truncated with ellipses, and the elided text turned out to hold the
+single most important passage in the dialogue for how the city is ZONED.** Verbatim:
+
+> "In the next place, they had **fountains, one of cold and another of hot water**, in gracious plenty
+> flowing... They constructed buildings about them and planted suitable trees, also they made
+> **cisterns**, some open to the heavens, others roofed over, to be used in winter as **warm baths**;
+> there were **the kings' baths, and the baths of private persons, which were kept apart; and there
+> were separate baths for women, and for horses and cattle**... Of the water which ran off they
+> carried some to the **grove of Poseidon**, where were growing all manner of trees of wonderful
+> height and beauty... while the remainder was **conveyed by aqueducts along the bridges to the outer
+> circles**; and there were **many temples built and dedicated to many gods**; also **gardens and
+> places of exercise, some for men, and others for horses, IN BOTH OF THE TWO ISLANDS formed by the
+> zones; and IN THE CENTRE OF THE LARGER OF THE TWO there was set apart a RACE-COURSE OF A STADIUM IN
+> WIDTH, and in length allowed to extend ALL ROUND THE ISLAND, for horses to race in.** Also there
+> were **GUARDHOUSES at intervals for the guards, THE MORE TRUSTED OF WHOM were appointed to keep
+> watch in THE LESSER ZONE, WHICH WAS NEARER THE ACROPOLIS, while THE MOST TRUSTED OF ALL had houses
+> given them WITHIN THE CITADEL, near the persons of the kings.** **The docks were full of triremes
+> and naval stores**, and all things were quite ready for use."
+
+**READING — THE RINGS ARE RANKS.** Least-trusted guard on the OUTER land ring (L2), more-trusted on
+the INNER (L1), most-trusted inside the CITADEL. The concentric plan is a **security gradient**, not
+a decorative one. Rick arrived at exactly this by threat-modelling the docks, *before* we found the
+passage. It also means the two land rings are **not residential** and **not interchangeable** — the
+dense housing is in the belt (§E). See RING_SPEC.md.
+
+## §B addendum — lines we had missed, and they matter
+
+> "...making a passage from the sea up to this, which became a harbour, and **leaving an opening
+> sufficient to enable the LARGEST VESSELS to find ingress.**"
+
+Independently confirms the 300-ft canal: it is sized for **the largest ships afloat**, not for barges.
+
+> "The stone which was used in the work they quarried from underneath the centre island, and from
+> underneath the zones, **ON THE OUTER AS WELL AS THE INNER SIDE**... and as they quarried, they at the
+> same time hollowed out **double docks**, having roofs formed out of the native rock. **Some of their
+> buildings were simple, but in others they put together different stones, VARYING THE COLOUR TO
+> PLEASE THE EYE, and to be a natural source of delight.**"
+
+Two things. (1) The zones were quarried on **both faces**, so dock frontages exist on the outer AND
+inner side of each land ring. (2) **The polychrome stonework is in the text.** Rick's instruction
+("use all the colors of the minecraft stone... to make this look interesting, but consistent") is not
+a liberty — it is Plato's own description, and it licenses the white/black/red palette.
 
 ## §E — The great outer wall and the dense city ring
 

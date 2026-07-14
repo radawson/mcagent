@@ -1,7 +1,9 @@
 {
-  "__comment": "Pinned to MC v26 (26.1.x). resource pack_format 84 per paper-current.jar version.json. No back-compat.",
+  "__comment": "Pinned to MC v26 (26.1.x), pack_format 84. v26 clients REQUIRE min_format/max_format when pack_format>64 (else JsonParseException at load -> assets never load -> purple cube).",
   "pack": {
+    "description": "Atlantis — Triremes (v1)",
     "pack_format": 84,
-    "description": "Atlantis — Triremes (v1)"
+    "min_format": 84,
+    "max_format": 84
   }
 }

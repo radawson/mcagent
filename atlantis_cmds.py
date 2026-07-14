@@ -182,10 +182,38 @@ def emit(cfg, maxr=None):
     w = cfg["canal_w"]
     x_start = cx + int(r_isl)
     x_end = cx + int(min(R, maxr) if maxr else R) + int(cfg["canal_overshoot"] * S)
-    setbox(x_start, yf, cz - w, x_end, yf, cz + w, PAL["found"])           # canal floor
-    setbox(x_start, yf + 1, cz - w, x_end, sea, cz + w, PAL["canal"])      # water to sea level
-    setbox(x_start, yf + 1, cz - w - 1, x_end, y_land, cz - w - 1, PAL["canal_wall"])
-    setbox(x_start, yf + 1, cz + w + 1, x_end, y_land, cz + w + 1, PAL["canal_wall"])
+    # A CANAL IS A CUT THROUGH GROUND. The channel is dug to -30 m while the rings only reach -10 m,
+    # so in a void world the trench hangs below the city's base with nothing holding its water in.
+    # I first "fixed" that with underwater walls running the whole length -- absurd on inspection
+    # (Rick, flying it: "why would we want walls underwater in the water rings?"). Walls were the
+    # wrong answer. Give the canal GROUND to be cut through: an embankment from the canal floor up
+    # to the ring floor, then dig the channel out of it. The earth holds the water; no underwater
+    # walls anywhere. (In whirled the real seabed does this for free.)
+    bank = w + 8
+    setbox(x_start, yf, cz - bank, x_end, rf, cz + bank, PAL["found"])     # embankment mass
+    setbox(x_start, yf + 1, cz - w, x_end, sea, cz + w, PAL["canal"])      # channel dug out of it
+    # OPEN CUT: where the canal crosses a LAND ring, the land above the waterline was left SOLID --
+    # a submerged bore with its roof one block above the water. Carve air from just above the
+    # waterline up past the land surface and the circuit walls: an open channel to the sky, and
+    # Plato's "gates ... where the sea passed in" (§B). This box ALSO erases the stale above-water
+    # quay walls -- removed geometry does not vanish on an idempotent re-run (INVARIANT 3).
+    setbox(x_start, sea + 1, cz - w - 1, x_end, y_wall + 1, cz + w + 1, "minecraft:air")
+    # Erase the stale UNDERWATER wall stubs where the canal crosses the WATER RINGS: the ring water
+    # and the canal water are one body and should simply meet.
+    for ri, ro in [(r_isl, r_w1), (r_l1, r_w2), (r_l2, r_w3)]:
+        xa, xb = cx + int(ri), cx + int(ro)
+        for zz in (cz - w - 1, cz + w + 1):
+            setbox(xa, rf + 1, zz, xb, sea, zz, PAL["canal"])
+    # Past the outermost water ring the canal runs out into open sea: raise the embankment to sea
+    # level so it reads as a harbour mole and the channel does not spill.
+    xw3 = cx + int(r_w3)
+    setbox(xw3, rf + 1, cz - bank, x_end, sea, cz - w - 1, PAL["found"])
+    setbox(xw3, rf + 1, cz + w + 1, x_end, sea, cz + bank, PAL["found"])
+    # Quays: ABOVE the waterline, and ONLY where the canal cuts through LAND.
+    for ri, ro in [(r_w1, r_l1), (r_w2, r_l2)]:
+        xa, xb = cx + int(ri), cx + int(ro)
+        for zz in (cz - w - 1, cz + w + 1):
+            setbox(xa, sea + 1, zz, xb, y_land, zz, PAL["canal_wall"])
 
     # --- radial passages: trireme tunnels through land rings + bridges over water rings (§B) ---
     # "leaving room for a single trireme to pass...covered over so as to leave a way underneath".
@@ -209,9 +237,13 @@ def emit(cfg, maxr=None):
 
         for dx, dz in [(-1, 0), (0, 1), (0, -1)]:
             for ri, ro in land_rings:                                    # tunnel through the land
-                radbox(dx, dz, ri, ro, tun_hw, rf, rf, PAL["found"])            # channel floor
-                radbox(dx, dz, ri, ro, tun_hw, rf + 1, sea, PAL["canal"])       # water to sea level
-                radbox(dx, dz, ri, ro, tun_hw, sea + 1, sea + headroom, "minecraft:air")  # ship headroom (land above = roof)
+                # NB: the circuit wall straddles the land ring's OUTER edge (r +/- wall_t), so a carve
+                # that stops at `ro` leaves a solid plug of wall between the tunnel mouth and the water
+                # ring beyond -- a dead end. Punch through it.
+                roe = ro + cfg["wall_t"] + 1
+                radbox(dx, dz, ri, roe, tun_hw, rf, rf, PAL["found"])            # channel floor
+                radbox(dx, dz, ri, roe, tun_hw, rf + 1, sea, PAL["canal"])       # water to sea level
+                radbox(dx, dz, ri, roe, tun_hw, sea + 1, sea + headroom, "minecraft:air")  # ship headroom (land above = roof)
                 radbox(dx, dz, ri, ro, road_hw, y_land, y_land, "minecraft:smooth_stone")  # road across the roof
             for ri, ro in water_rings:                                   # bridge over the water
                 radbox(dx, dz, ri, ro, road_hw, bridge_y, bridge_y, "minecraft:stone_bricks")
@@ -222,7 +254,10 @@ def emit(cfg, maxr=None):
     # (outer faces + under-island docks deferred: they'd undercut the circuit walls; thread later.)
     if cfg.get("docks", True) and (maxr is None or maxr >= int(r_w3)):
         add("#PHASE docks")
-        dock_depth = m2b(12)
+        # 44 m: the excavated ship sheds at Zea are ~40 m long (a trireme is just under 37 m), plus a
+        # back wall. This carve is the VOID only -- dock_gen.py builds the sheds, slipways, facing,
+        # lights and stores INTO it, because a `-a` paste cannot carve.
+        dock_depth = m2b(44)
         dock_head = m2b(6)
         for ri in (r_w1, r_w2):                                   # inner edge of L1, L2
             annulus(ri, ri + dock_depth, rf + 1, sea, PAL["canal"])                   # moorage water

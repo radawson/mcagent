@@ -1,0 +1,138 @@
+{
+  "__comment": "Greek/Phoenician MERCHANTMAN -- the 'round ship' (gaulos/holkas). Proportioned off the KYRENIA wreck (4th c. BC, best-preserved Greek merchant hull): 14 m long, 4.4 m beam = a 3.2:1 ratio, against the trireme's 6.2:1. That ratio IS the animal -- a trireme is a needle, this is a tub. Deep-bellied, NO RAM (the visual tell of a trader vs a warship), a single mast with a big square sail, curved sternpost, and quarter-rudders instead of a stern rudder. Cargo lashed on deck. Vanilla block textures only.",
+  "textures": {
+    "hull": "minecraft:block/dark_oak_planks",
+    "deck": "minecraft:block/oak_planks",
+    "sail": "minecraft:block/white_wool",
+    "stripe": "minecraft:block/red_wool",
+    "mast": "minecraft:block/stripped_oak_log",
+    "cargo": "minecraft:block/terracotta",
+    "particle": "minecraft:block/dark_oak_planks"
+  },
+  "elements": [
+    {
+      "name": "keel",
+      "from": [3, 2, 5], "to": [25, 5, 11],
+      "faces": {
+        "north": {"texture": "#hull"}, "south": {"texture": "#hull"},
+        "east": {"texture": "#hull"}, "west": {"texture": "#hull"},
+        "up": {"texture": "#hull"}, "down": {"texture": "#hull"}
+      }
+    },
+    {
+      "name": "belly",
+      "from": [1, 5, 3], "to": [27, 10, 13],
+      "faces": {
+        "north": {"texture": "#hull"}, "south": {"texture": "#hull"},
+        "east": {"texture": "#hull"}, "west": {"texture": "#hull"},
+        "up": {"texture": "#hull"}, "down": {"texture": "#hull"}
+      }
+    },
+    {
+      "name": "gunwale",
+      "from": [2, 10, 3], "to": [26, 12, 13],
+      "faces": {
+        "north": {"texture": "#hull"}, "south": {"texture": "#hull"},
+        "east": {"texture": "#hull"}, "west": {"texture": "#hull"},
+        "up": {"texture": "#deck"}, "down": {"texture": "#hull"}
+      }
+    },
+    {
+      "name": "stem",
+      "from": [25, 10, 5], "to": [28, 18, 11],
+      "rotation": {"origin": [26, 10, 8], "axis": "z", "angle": -22.5},
+      "faces": {
+        "north": {"texture": "#hull"}, "south": {"texture": "#hull"},
+        "east": {"texture": "#hull"}, "west": {"texture": "#hull"},
+        "up": {"texture": "#hull"}, "down": {"texture": "#hull"}
+      }
+    },
+    {
+      "name": "sternpost",
+      "from": [0, 10, 5], "to": [3, 24, 11],
+      "rotation": {"origin": [2, 10, 8], "axis": "z", "angle": 22.5},
+      "faces": {
+        "north": {"texture": "#hull"}, "south": {"texture": "#hull"},
+        "east": {"texture": "#hull"}, "west": {"texture": "#hull"},
+        "up": {"texture": "#hull"}, "down": {"texture": "#hull"}
+      }
+    },
+    {
+      "name": "quarter_rudder_port",
+      "from": [0, 5, 2], "to": [3, 11, 3],
+      "rotation": {"origin": [2, 11, 3], "axis": "z", "angle": 22.5},
+      "faces": {
+        "north": {"texture": "#mast"}, "south": {"texture": "#mast"},
+        "east": {"texture": "#mast"}, "west": {"texture": "#mast"},
+        "up": {"texture": "#mast"}, "down": {"texture": "#mast"}
+      }
+    },
+    {
+      "name": "quarter_rudder_starboard",
+      "from": [0, 5, 13], "to": [3, 11, 14],
+      "rotation": {"origin": [2, 11, 13], "axis": "z", "angle": 22.5},
+      "faces": {
+        "north": {"texture": "#mast"}, "south": {"texture": "#mast"},
+        "east": {"texture": "#mast"}, "west": {"texture": "#mast"},
+        "up": {"texture": "#mast"}, "down": {"texture": "#mast"}
+      }
+    },
+    {
+      "name": "mast",
+      "from": [13, 12, 7], "to": [15, 30, 9],
+      "faces": {
+        "north": {"texture": "#mast"}, "south": {"texture": "#mast"},
+        "east": {"texture": "#mast"}, "west": {"texture": "#mast"},
+        "up": {"texture": "#mast"}, "down": {"texture": "#mast"}
+      }
+    },
+    {
+      "name": "yard",
+      "from": [13, 26, -2], "to": [15, 27, 18],
+      "faces": {
+        "north": {"texture": "#mast"}, "south": {"texture": "#mast"},
+        "east": {"texture": "#mast"}, "west": {"texture": "#mast"},
+        "up": {"texture": "#mast"}, "down": {"texture": "#mast"}
+      }
+    },
+    {
+      "name": "sail",
+      "from": [13.5, 16, -1], "to": [14.5, 26, 17],
+      "faces": {
+        "north": {"texture": "#sail"}, "south": {"texture": "#sail"},
+        "east": {"texture": "#sail"}, "west": {"texture": "#sail"},
+        "up": {"texture": "#sail"}, "down": {"texture": "#sail"}
+      }
+    },
+    {
+      "name": "sail_band",
+      "from": [13.4, 20, -1], "to": [14.6, 22, 17],
+      "faces": {
+        "north": {"texture": "#stripe"}, "south": {"texture": "#stripe"},
+        "east": {"texture": "#stripe"}, "west": {"texture": "#stripe"},
+        "up": {"texture": "#stripe"}, "down": {"texture": "#stripe"}
+      }
+    },
+    {
+      "name": "cargo_fore",
+      "from": [18, 12, 6], "to": [22, 15, 10],
+      "faces": {
+        "north": {"texture": "#cargo"}, "south": {"texture": "#cargo"},
+        "east": {"texture": "#cargo"}, "west": {"texture": "#cargo"},
+        "up": {"texture": "#cargo"}, "down": {"texture": "#cargo"}
+      }
+    },
+    {
+      "name": "cargo_aft",
+      "from": [5, 12, 6], "to": [9, 15, 10],
+      "faces": {
+        "north": {"texture": "#cargo"}, "south": {"texture": "#cargo"},
+        "east": {"texture": "#cargo"}, "west": {"texture": "#cargo"},
+        "up": {"texture": "#cargo"}, "down": {"texture": "#cargo"}
+      }
+    }
+  ],
+  "display": {
+    "fixed": {"rotation": [0, 0, 0], "translation": [0, 0, 0], "scale": [1, 1, 1]}
+  }
+}

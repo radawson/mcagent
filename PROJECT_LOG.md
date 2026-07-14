@@ -401,6 +401,264 @@ Cowork can write here directly and will stop using the scratch outputs folder.
   raise --phase-every substantially -- size each flush to land comfortably under ~200s (not 25s) using
   the measured model (~7s + chunks/200). Fewer, fatter flushes are strictly cheaper.
 
+## [design] 2026-07-12 — S=185 CORE COMPLETE (the pylon is standing) + two invariants to keep
+
+- DONE: the ~5 km full-stade core is built and the Temple of Poseidon is pasted on the citadel.
+  1,378 heavy ops, 64 phase saves, one live log rotation AND a mid-build server restart -- zero blocks
+  lost. Watchdog restored to 60. View: /tp @s -10000 30 10000 in scratchpad, or BlueMap at
+  http://10.10.12.5:8100 (x -10000, z 10000).
+- Final harness bug (benign, fixed by [exec]): `//paste` reports "has been pasted", which the DONE
+  pattern didn't match -> added. Same bug class AGAIN (a completion contract that didn't cover every
+  op type). Total: 2 real Watchdog crashes; 3 harness bugs; 0 design/geometry faults at S=185.
+
+### INVARIANT 1 (design, HARD RULE) — every op in a build stream must be IDEMPOTENT + ABSOLUTELY ANCHORED
+  This is what let the harness survive a full mid-build server restart: re-sending ops HEALED the build
+  instead of corrupting it. It emerged from the tiling + headless-paste work rather than being designed
+  for restart-tolerance -- but it is now a rule, not an accident.
+    ALLOWED : //generate -r <fixed world-coord expr>, //set on absolute //pos1//pos2 boxes,
+              //paste -o (origin baked into the schem).
+    BANNED  : anything relative or stateful -- //paste at a position, //stack, //undo, player-relative
+              selections. A restart landing inside a non-idempotent op is unrecoverable.
+
+### INVARIANT 2 (ops) — BUILD LOCK before any long run
+  The 18:03 restart was NOT issued by the build; most likely a parallel plugin-deploy
+  (plugins/update/ + systemctl restart) landing mid-build. Idempotency made it survivable; that is a
+  property of the command stream, not a guarantee about the world. FIX: harness drops
+  `papermc/BUILD_IN_PROGRESS` at start, removes it at exit; the deploy path refuses to restart while it
+  exists. Converts "we got away with it" into "it cannot happen." Do this BEFORE the belt run.
+
+- REMAINING: hand-sculpt the colossus (procedural massing is the weak spot), racecourse, grove +
+  hot/cold springs, outer-face & under-island docks, trireme fit-tuning, and the belt (see save budget).
+
+## [design] 2026-07-12 — IN-GAME REVIEW (Rick flying, Cowork watching via computer-use): 2 canal bugs
+
+- Bridges/passages on -X: **CORRECT**. Confirmed visually at X=-10607 (r~607, water ring 1): a proper
+  wide stone-brick deck spans the water. radbox emits a flat slab as designed.
+- CANAL BUG 1 (roof at water level): the canal filled water only to sea level and stopped. Where it
+  crosses a LAND ring the land above the waterline (sea+1..y_land) was left SOLID -> the canal was a
+  SUBMERGED BORE with its roof one block above the water. Rick swam it and read it exactly right.
+  FIX: carve air from sea+1 up past y_land and the circuit walls -> an open channel to the sky (also
+  gives Plato's "gates ... where the sea passed in").
+- CANAL BUG 2 (two walls in the sea): quay walls ran the canal's FULL length, including across the
+  open water rings, standing in the sea retaining nothing.
+  FIX IS SUBTLE -- my first attempt was HALF WRONG and would have DRAINED THE CITY. Below the
+  waterline those walls are STRUCTURAL: the canal is cut to -30 m while the rings only reach -10 m, so
+  it is a trench slicing BENEATH the city base. Strip them and the canal empties into the void.
+  Correct fix: walls run the WHOLE length BELOW sea level (containment); ABOVE sea level they exist
+  ONLY where the canal cuts through land (quays).
+
+### INVARIANT 3 (design, HARD RULE) — idempotent re-runs fix CHANGED geometry, NOT REMOVED geometry
+  Stale blocks persist. If a design change DELETES something, the command stream must explicitly CLEAR
+  it -- a re-run alone will not. (Here: the open-cut air box is widened to cz±(w+1) so it also erases
+  the old above-water quay walls.) This is the flip side of INVARIANT 1 and just as important.
+
+- METHOD NOTE: three of my four wrong theories this session came from reasoning about the build instead
+  of looking at it. Watching the client + one F3 reading located both bugs in minutes. LOOK FIRST.
+
+## [design] 2026-07-12 — the city: procedural PLACEMENT + handcrafted GEOMETRY (kit of parts)
+
+- DIAGNOSIS of "blocky rough cut": that is procgen's CEILING, not a polish problem. Procedural
+  generation gave us correct MASS at 5 km; it cannot give DETAIL, because detail is authored, not
+  computed. The land rings are lawns. Fix = a different technique, reusing the schematic engine.
+- schem.py: shared Sponge-v2 writer extracted (stdlib only), with the top-level `Offset` fix baked in.
+  temple_gen.py should be refactored onto it (dedupe) when convenient.
+- city_gen.py: hand-authored parametric building kit (townhouse, courtyard house, shop row, shrine,
+  tower -- real walls, doorways, windows, courtyards, parapets, flat roofs) + a layout pass that lays
+  ring roads and radial streets across a land ring and stamps buildings into the plots, each rotated
+  to face its street. Emits ONE angular WEDGE per .schem (the rings are far too big for one schematic).
+- Keeps clear of: the rock-cut docks (inner band), the circuit wall (outer edge), the four cardinal
+  passages/bridges, and the +X grand canal corridor.
+- PASTE WITH `-a`. The schem holds ONLY solid blocks -- doorways/windows/interiors are cells we simply
+  never set, so the air above the grass shows through. Nothing is carved, nothing overwrites terrain.
+- DETERMINISM (INVARIANT 1): layout is seeded from (ring, sector), NEVER the clock. A re-run must
+  reproduce the same city block-for-block or the build stops being idempotent and a mid-run restart
+  would corrupt it. This is a real constraint on procedural content, not a nicety.
+- HANDOFF to [exec]: (1) regenerate + re-run the core with the canal fixes; (2) then ONE wedge:
+      python3 city_gen.py --ring 1 --sectors 32 --sector 0 --out city_r1_s00.schem
+  paste it, and we LOOK at it before committing to all 64 wedges.
+
+## [design] 2026-07-12 — WHIRLED SITE: cold Atlantis confirmed; vmodel.py extracted; terrain-clear needed
+
+- SITE ([exec], via mcbiome.py): whirled (43500, 21000), northern archipelago. Canal axis due EAST to a
+  jagged_peaks massif ~2,084 b out = causeway terminus. Cold: taiga, snowy beaches, frozen peaks.
+- COLD AESTHETIC: **YES** -- and it is MORE faithful, not a compromise. Plato puts Atlantis BEYOND the
+  Pillars of Heracles, i.e. the Atlantic, not the Mediterranean. Our palette already suits it:
+  calcite/white-terracotta city + red terracotta roofs + copper/gold, against black water, pine and
+  snow. Stronger image than the expected white-city-on-blue-sea.
+  PLUS: //setbiome a temperate biome INSIDE the ring footprint so the city never accumulates snow and
+  stays warm-toned, while the archipelago around it stays snowy. "Precise city, natural frame" --
+  exactly the idea [exec] was testing with the windswept/meadow wedges. The biome tool earns its keep.
+- vmodel.py ADDED: single source of truth for the vertical model + radii. All three generators
+  (atlantis_cmds, temple_gen, city_gen) were DUPLICATING the vertical math -- a sea-level rebase would
+  have meant three edits and one missed edit buries the temple. ANCHOR IS SEA LEVEL now:
+    scratchpad SEA=-30 ; whirled SEA=63.  Everything else hangs off it.
+  TODO (design): wire all three generators onto vmodel. DO NOT build in whirled until this is done --
+  a Y-datum mismatch would put the temple underground.
+- NEW REQUIREMENT for a REAL world (~54% of the footprint is existing island): a TERRAIN-CLEAR pass.
+  In the void we placed into air; in whirled we must ERASE what nature put there -- trees, hills,
+  peaks standing above the design surface. vmodel.clear_top provides the ceiling. Cost: block count
+  rises a lot (clearing ~90 layers over 19.6M columns), but SAVE cost is unchanged (same ~76k chunks),
+  so the Watchdog picture is the same. Build time goes up, not crash risk.
+- SEQUENCING: do NOT abandon scratchpad. Finish validating there (canal fixes + one city wedge) -- it
+  is the cheap test bed. Whirled prep (vmodel wiring, terrain-clear, biome plan) runs in PARALLEL.
+
+## [exec->design] 2026-07-12 — ROOT CAUSE, finally: SYNCHRONOUS WORLDGEN on the main thread
+
+- [exec] caught it: the main thread hung 290s inside vanilla worldgen (Perlin/density functions).
+  FAWE touching an UNGENERATED chunk makes Paper generate it SYNCHRONOUSLY on the main thread, and a
+  big batch blows the Watchdog. This was never primarily a save problem.
+- RETROACTIVE: hours ago we measured "first op at the virgin frontier = 240s" and filed it as a TIMING
+  cost. It was the killer all along. We spent the session optimizing the thing we could see (saves,
+  chunk counts, flush granularity) while the actual cause sat in a line we had already written down.
+
+### INVARIANT 4 (HARD RULE) — NEVER let FAWE touch an ungenerated chunk
+  Pre-generate the FULL footprint with Chunky, VERIFY coverage, and only then edit. Non-negotiable at
+  whirled: ~76k chunks pregenned before a single block is placed, and 54% of that footprint is real
+  island so the carve WILL reach for edge chunks. Also freeze BlueMap during builds -- a resuming
+  render crawling to the ungenerated fringe is the same trigger.
+
+## [design] 2026-07-12 — IN-GAME REVIEW of both city districts (Cowork watching, Rick flying)
+
+- VERDICT: RADIAL WINS, decisively. Rectilinear = scattered huts on a lawn (far too sparse, plots way
+  oversized). Radial = a packed urban fabric of curved terraces, round towers, domes. It reads as a
+  CITY. Round buildings also dissolve the skew bug outright -- a circle has no orientation.
+- FIX 1 (bug): terraces were laid across the FULL angular span and the roads painted afterwards at
+  ground level only -- so buildings SQUATTED ON THE CROSS STREETS (road drawn, walls still standing).
+  Now: radial streets computed FIRST, terraces skip units that straddle one -- EXCEPT ~1 in 7, which
+  OVERBUILDS the lane with an ARCHWAY through it. Rick's call, and right: a city that occasionally
+  vaults a building over a lane reads better than a perfect grid.
+- FIX 2 (variety): wall material was picked PER CELL, so every dwelling was a random speckle of the
+  same three whites -- which is exactly why the street read flat. Now ONE wall + ONE roof material
+  PER HOUSE. Coherent dwellings, varied street, zero new palette blocks.
+- FIX 3 (canal, Rick caught my rationalisation): I had run quay walls UNDERWATER the whole length,
+  arguing they were structural. Absurd on inspection. A CANAL IS A CUT THROUGH GROUND -- the fix is
+  to give it ground: an EMBANKMENT from canal floor up to ring floor, channel dug out of it, earth
+  holds the water, no underwater walls anywhere. Stale stubs explicitly erased (INVARIANT 3). Past
+  the outer water ring the embankment rises to sea level as a harbour mole.
+- ACCEPTED AS-IS: some "twisting" of roofs/walls where arcs rasterize. Rick: hand-edit, not proc-edit.
+  Correct call -- procgen's ceiling again; this is exactly the seam where authored work belongs.
+
+## [design] 2026-07-12 — radial v2 APPROVED by Rick; city was clobbering the circuit wall (fixed)
+
+- Rick on v2: "MUCH better. Streets lay out nicely, the arches are a nice touch, the single-coloured
+  houses look much better and more diverse. Feels like a large city, not a congested ghetto."
+  PATTERN IS SETTLED: curved terraces + round towers + tholoi, one material per house, cross streets
+  clear with ~1-in-7 archway overbuilds.
+- BUG (Rick): the city CLOBBERED THE CIRCUIT WALL on the outer side. Two causes:
+    1. the road band ran to r1 + road_w, which lands ON the wall's inner face and repaints a course
+       of it at street level;
+    2. towers (radius 5) on the outermost ring road could reach it.
+- FIX, and the gap is now a FEATURE not just a setback: real walled cities keep a clear strip inside
+  the ramparts (the Roman POMERIUM) with a road along it. So:
+    r_nobuild  = r_out - wall_t - 2   HARD clamp; nothing may ever cross it (roads included)
+    r_wallroad = r_out - wall_t - 6   the pomerium -- a wall-walk ring road inside the wall
+    r1         = r_out - wall_t - 12  buildings stop here
+  Towers additionally bounded clear of BOTH the wall and the rock-cut docks.
+
+## [design] 2026-07-12 — THE MARKET QUARTER on the pomerium (Rick's idea, and historically exact)
+
+- Rick: "the inside road (pomerium) would be a great place for market stalls and shops -- makes sense
+  from a traffic and human perspective." Correct on both counts, and it is a real historical pattern:
+  markets go where traffic concentrates AND where there is open ground, and the pomerium is both. It
+  is also the strip every GATE empties into (canal + bridges pierce the wall here), so anyone entering
+  the city walks straight into it. Shops built against the inside of a city wall = the souk, the
+  wall-market, the medieval lean-to. Oldest urban pattern there is.
+- IT ALSO FIXES SOMETHING I HADN'T VOICED: the city has NO COLOUR. White housing is right and
+  disciplined but bloodless. **All the colour now lives in the bazaar** -- striped awnings (orange /
+  red / yellow / brown terracotta), copper wares (Atlantis was famed for metal), produce. Dwellings
+  stay white; the life is in the market. This is a design PRINCIPLE, not just an addition.
+- Pomerium widened into a market quarter, outward from the housing:
+    r1          terraced housing stops
+    r_stalls    freestanding canopy stalls (posts + awning + counter + wares)
+    r_wallroad  the pomerium road itself
+    r_shops_in  shop fronts: open, counters, awnings projecting over the street
+    r_shops_out shop backs, against the rampart
+    r_nobuild   HARD limit -- nothing may ever cross it
+  ~12% of shop bays left as gaps (alleys / stairs up to the wall); stalls ~55% density so you can walk.
+
+## [design] 2026-07-12 — THE WATERFRONT (dock_gen.py): the city finally meets its sea
+
+- THE HOLE: Atlantis is a MARITIME city that was turning its back on the water. Three rings of sea,
+  and no quay, no steps, no mooring, no ships -- you could walk off a land ring and fall in. Plato is
+  emphatic about the opposite ("the docks were full of triremes and naval stores"; the harbours kept
+  up "a multitudinous sound of human voices, and din and clatter of all sorts night and day").
+- STRUCTURAL BUG FOUND: the dock gallery was cut **12 m deep**. A trireme is ~20 m long -- the ships
+  did not fit in their own docks. Now 28 m (vmodel.dock_depth), which berths a hull plus working room.
+- MATERIALS (Rick + Plato): PRISMARINE as the FACING -- the only stone family that reads sea-worn; it
+  belongs to the water as the tri-colour stone belongs to the land. The mass and ROOFS stay NATIVE
+  ROCK (calcite/granite/blackstone) because Plato is explicit: "roofs formed out of the native rock."
+  Dark oak decking for piers; WAXED COPPER for bollards, mooring rings, lamp brackets (orichalcum).
+- LIGHT (Rick asked for something that fits): SEA LANTERNS set into the quay face BELOW the waterline
+  -- they are literally made of prismarine, so the water itself glows cold blue-green. HANGING
+  LANTERNS on chains under the rock roof for warm working light. Cold sea-light in the water, warm
+  fire-light under the stone. Also functional: an unlit cavern this size is a mob farm.
+- FORM: piers divide the hollow gallery into individual BERTHS ("double docks" = ships in ranks, not
+  one long trench), each decked in dark oak at the waterline so you can walk a moored hull. Quay wall,
+  wharf paving on the dock roof, bollards + mooring chains, and NAVAL STORES (warehouses) set back
+  from the wharf -- industrial character against the white housing and the coloured market.
+- ARCHITECTURE: dock_gen.py is purely ADDITIVE (`-a` paste). A `-a` paste CANNOT carve, so the
+  HOLLOWING stays in atlantis_cmds (docks phase) and the schematic builds piers/facing/decks/lights/
+  stores INTO that void. Same bulk-by-command, detail-by-schematic split as everything else.
+- COLOUR PRINCIPLE holds: white housing / coloured market / and now the docks read industrial --
+  prismarine, timber and copper. Each quarter has its own register.
+
+## [design] 2026-07-12 — docks REBUILT to the excavated ship sheds at ZEA. I nearly fixed the wrong thing.
+
+- Rick flew the docks: "not sure how much of this you intended to be underwater... it landed a little
+  low." MEASURED (F3, standing on the pier deck): Y=-28, deck at -29, water tops at -30. The PASTE IS
+  CORRECT. The design was wrong.
+- I had a theory (freeboard too small, raise the whole vertical model from 8 m to 14 m) and was one
+  command from committing it. Rick sent the Trireme article instead. THE ARCHAEOLOGY KILLED MY THEORY:
+
+  EXCAVATED SHIP SHEDS (neosoikoi) at ZEA -- the war harbour of Athens, i.e. the literal building
+  we are making (Dragatsis/Doerpfeld; corroborated by Vitruvius):
+      shed ~40 m LONG, just 6 m WIDE, interior height 4.026 m
+      trireme just under 37 m long, hull 2.15 m above water, DRAUGHT ~1 m
+
+  I had it almost exactly INVERTED: I built 28 long x 16 wide x 6 high. Real sheds are LONG, NARROW
+  and LOW. That is why it read as a flooded cellar -- it was a ROOM when it should be a SLOT.
+
+- THE DRAUGHT IS THE KEY. A trireme draws ONE METRE. These ships were not moored floating in deep
+  water -- they were HAULED OUT up a sloping slipway and stored DRY. That is WHY the sheds are narrow:
+  one hull each, dragged up stern-first, in ranks. The 4 m ceiling is not cramped, it is CORRECT.
+- AND IT VINDICATES THE 8 m FREEBOARD. My "raise the land to 14 m" fix would have been wrong AND
+  expensive. The vertical model is fine; the berth proportions were the fault.
+- REBUILT: vmodel gains shed_width(6) / shed_pier(3) / slip_mouth(sea-2) / slip_head(sea+2) /
+  shed_roof(sea+6); dock_depth 28 -> 44 (40 m shed + back wall). dock_gen now builds a SLOPING
+  SLIPWAY: submerged at the sea end so the hull floats in, rising to dry ground at the head where the
+  ship is drawn up. Hauling bollard at the head, mooring chain at the mouth.
+- LESSON (again, and I keep having to relearn it): I have now been wrong about this build four times
+  by reasoning instead of measuring, and every single correction came from LOOKING or from a SOURCE.
+  The F3 reading killed the paste theory; the excavation killed the freeboard theory.
+
+## [design] 2026-07-12 — OVER-CORRECTED: it's a TRADING port, not an arsenal (Rick)
+
+- Rick: "These are trading docks, not war machine slots below the rim. We need TWO things -- narrow
+  trireme slots in some parts, but the MAJORITY are working docks: Phoenician traders coming and
+  going, unloading cargo."  CORRECT, and it is a PROGRAM-level error, not a detail one. I was handed
+  one beautiful piece of archaeology (Zea) and turned the WHOLE waterfront into a navy base.
+- PLATO AGREES WITH RICK, and I had already quoted the line: the harbours were "full of vessels and
+  MERCHANTS coming from all parts... a multitudinous sound of human voices, and DIN AND CLATTER of all
+  sorts night and day" (§E). The triremes and naval stores are there too (§D) -- but the NOISE is
+  CARGO. I built the quiet half and forgot the loud one.
+- THE SHIP TYPES DEMAND DIFFERENT BERTHS, and that IS the design:
+    TRIREME     -- 37 x 6 m, draught 1 m. HAULED OUT, stored DRY in a roofed shed. Cannot moor.
+    MERCHANTMAN -- Phoenician "round ship": beamy, deep-drafted, sail. STAYS AFLOAT, moors ALONGSIDE,
+                   gets UNLOADED. You cannot berth these two in the same structure.
+- REBUILT dock_gen as TWO segment types (NAVAL_FRACTION = 0.30):
+    NAVAL   (minority, clustered) -- the neosoikoi as built. The arsenal.
+    TRADING (majority) -- a LOW OPEN QUAY built OUT into the water at ~2 m above the waterline
+            (you cannot unload a ship onto a wharf 8 m above its deck). Merchantmen moor alongside;
+            derrick cranes, gangplanks, cargo stacks. AND the rock gallery behind becomes what it
+            should always have been: VAULTED BONDED WAREHOUSES with an open arcade onto the quay.
+            Cargo comes off the ship, across the quay, into the vaults. THE CAVE IS THE STORAGE,
+            NOT THE BERTH. That is the insight that makes the whole waterfront click.
+    Plus steps from the wharf up to the city (the land is 8 m above the water -- there was no way up).
+- trireme:park added -- a STATIC trireme display (no boat/physics) for ships drawn up in the sheds,
+  and as a platform to climb on. Inherits the player's yaw so it lies along the shed.
+- STILL WANTED: a MERCHANTMAN model (beamy round ship) to moor at the trading wharves. The trireme
+  model is a warship and will look wrong tied up at a cargo quay.
+
 ## [exec] 2026-07-12 — Temple of Poseidon pasted on citadel (schematic engine) + Offset fix
 
 - temple_gen.py DATA_VERSION=4790 CONFIRMED correct (version.json world_version=4790, level.dat=4790;
@@ -414,3 +672,193 @@ Cowork can write here directly and will stop using the scratch outputs folder.
   gold pinnacle cap @ -44; orichalcum waxed_cut_copper columns (hypostyle); gold_block sanctuary (-X);
   smooth_quartz walls; centre redstone marker runs up through (harmless). 33x10x17, 2206 blocks.
 - At S=30 it's a doll's house as expected; the payoff is S=185 (30-block nave, looming pylon).
+
+---
+
+## [design] 2026-07-12 — THE MERCHANTMAN + a scale bug in park.mcfunction (ships are now a family)
+
+Rick: "go for a merchant ship. Also, you might get some inspiration from Piraeus, the greek port."
+
+PIRAEUS SETTLES THE LAYOUT ARGUMENT. Piraeus is not one harbour, it is THREE, and they were
+functionally segregated: **Kantharos** was the commercial harbour (the *emporion*, with the deigma
+sample-market and the grain stores); **Zea** and **Mounichia** were the naval basins, and Zea is
+where the 196 ship sheds we already used for the neosoikoi were excavated. Navy and trade sat in
+PHYSICALLY SEPARATE BASINS. So dock_gen's naval segments should be CLUSTERED into an arsenal
+quarter, not sprinkled at 30% around the whole rim. (Not yet changed in dock_gen.py — see TODO.)
+
+THE SHIP ITSELF — anchored on the KYRENIA WRECK (4th c. BC, sank c. 294 BC; the best-preserved
+Greek merchant hull we have; ~381 amphorae recorded aboard, mostly Rhodian — wine, oil, almonds):
+
+| | trireme | merchantman (Kyrenia) |
+|---|---|---|
+| length | ~37 m | **14 m** |
+| beam | 6 m | **4.4 m** |
+| ratio | **6.2 : 1** | **3.2 : 1** |
+
+That ratio IS the animal. A trireme is a needle; a merchantman is a tub. The visual tells, all now
+in the model: deep round belly, **NO RAM** (the single clearest trader-vs-warship cue), one mast
+with a big square sail, curved sternpost, **quarter-rudders** not a stern rudder, cargo on deck.
+
+NEW: resourcepack/assets/trireme/models/item/merchantman.json (+ items/merchantman.json).
+  Model is 1.8125 blocks long x 0.625 beam = 2.9:1 in-model, so the tub ratio survives the render.
+
+BUG FOUND AND FIXED — park.mcfunction was parking triremes at scale 4.0 = a **12 m** ship. We then
+built **40 m** ship sheds off the Zea excavation. We would have been parking a toy in a boathouse.
+The trireme model is 3.0 blocks long, so TRUE SCALE is 37/3.0 = 12.3; park now uses **12.0** ->
+36 m long, 4.5 m beam. That the model's own beam then lands inside the excavated 6 m shed with
+~0.75 m clearance either side is independent confirmation the hull proportions are right.
+LESSON (again): the archaeology is load-bearing. Every number we took from a source has held; every
+number I eyeballed has had to be redone.
+
+DATAPACK — ships are now a FAMILY, not a one-off. Generic tags `ship_boat`/`ship_disp` (rideable),
+`ship_parked` (dry, in a shed), `ship_moored` (afloat, alongside):
+  trireme:summon      rideable trireme      (scale 4.0, unchanged; now also carries the generic tags)
+  trireme:merchant    rideable merchantman  (scale **3.0**, NOT 4.0 — see below)
+  trireme:park        static trireme, dry in a shed   (scale 12.0 = 36 m)
+  trireme:moor        static Kyrenia coaster alongside (scale 7.5  = 13.6 m x 4.7 m)
+  trireme:moor_large  static deep-sea trader alongside (scale 14.0 = 25.4 m x 8.8 m)
+  trireme:moor_at     MACRO: {scale:"..",sink:".."} — tune without editing files
+  trireme:uninstall   clears every ship of every type
+- tick.mcfunction is now ONE line keyed on the generic tags, so it covers all rideables and any
+  future hull. summon.mcfunction had to gain those tags or the trireme would have silently stopped
+  turning — the kind of break a "just add a file" change hides.
+- Static ships are deliberately NOT ticked: no vehicle, rotation set once at summon.
+- WHY merchant scale 3.0 and not 4.0: rendering both hulls at 4.0 would make the trader 60% of the
+  warship's length when the real ratio is 38%. 3.0 gives a 5.4-block coaster that reads correctly
+  next to a 12-block trireme.
+- moor_large exists because Kyrenia is the best-PRESERVED merchantman, not the biggest — she was a
+  coaster. Mixed tonnage makes the wharf read as a working port, not a car park of identical hulls.
+
+TUNABLE, and it is the one number worth eyeballing in-game: the `sink` on the moored hulls (-4.5 /
+-6.0). It assumes the quay deck sits 2 m above the sea (dock_gen: quay_y = sl + m2b(2)) and the
+hull wants ~1.3 m of draught. If she rides high and shows keel, sink further; if the deck is awash,
+raise. Use trireme:moor_at to iterate without a repack.
+
+USAGE (matters, and is not obvious): to moor, stand on the quay deck and look **ALONG** the quay,
+not out to sea — the hull inherits your yaw, so looking seaward berths her bow-on into the stone.
+To park, stand at the head of the slipway and face down the shed toward the water.
+
+TODO for exec: needs a resourcepack reload (the new model + item definition) and a `/reload` for
+the datapack. Then: /function trireme:moor on a trading quay, /function trireme:park in a shed.
+
+TODO for design (me): cluster the naval segments into a Zea-style arsenal quarter instead of
+NAVAL_FRACTION=0.30 scattered around the rim; Piraeus says they were separate basins.
+
+---
+
+## [design] 2026-07-12 — THE BIG ONE: canal 6x too narrow, rings 3x too short, merchants in the
+## wrong rings, and the whole city zoned wrong. Rick found all four. FULL REBUILD next run.
+
+Rick, flying the S=185 core: "the land rings feel VERY cramped... having water passages BEHIND the
+quay with no access is odd... at scale, how WIDE should the grand canal be? Given the scale and
+grandeur of the temple, this feels sandwiched in."  Then, later: "each of the rings has a unique set
+and style of buildings (residential, administrative, military, core) and probably needs unique
+design."  Every one of these was right. New docs: **HARBOUR_SPEC.md**, **RING_SPEC.md**. vmodel.py
+rewritten (v2) and is now the enforcing source of truth.
+
+ROOT CAUSE OF ALL OF IT: we took Plato's PLAN dimensions literally and then EYEBALLED the third
+dimension and the PROGRAMME. Radii: sourced. Everything else: invented.
+
+### 1. THE CANAL WAS SIX TIMES TOO NARROW (§B, literal)
+"a canal of THREE HUNDRED FEET IN WIDTH and ONE HUNDRED FEET IN DEPTH." A stade is 600 ft, so
+300 ft = HALF A STADE = 92 m. We built 15 m. The canal was DEEPER (31 m) THAN IT WAS WIDE.
+HOW IT SURVIVED, and this is the lesson: `canal_w = 7` was a HARDCODED HALF-WIDTH, the only
+dimension in the build not passing through m2b(). At S=30 -- THE SCALE WE VALIDATED THE ENGINE AT --
+ft2b(300) = 15, i.e. half-width 7. IT WAS CORRECT. The magic number was calibrated at the scale
+where it happened to be right, then frozen while S went to 185.
+  ==> vmodel gains ft2b(). Plato's foot-measures now survive AS FEET.
+  ==> AND THE COUPLING THAT HID IT: `tun_hw = canal_w - 1`. ONE KNOB DOING TWO JOBS. Fixing the canal
+      would have blown the trireme tunnels out to 91 m. Now independent (§B sizes them differently:
+      the canal takes "the LARGEST VESSELS", the tunnels take "a SINGLE TRIREME").
+  ==> ALSO MISSED IN §B, found on re-fetch: "leaving an opening sufficient to enable the LARGEST
+      VESSELS to find ingress." Independent confirmation of the 92 m figure.
+
+### 2. THE BANKS WERE A CURB (§B)
+y_land = sea+8, headroom = sea+6 -> A TWO-METRE ROCK ROOF over a ship channel, carrying a road and a
+city. §B: "they covered over the channels... FOR THE BANKS WERE RAISED CONSIDERABLY ABOVE THE WATER."
+It also silently foreclosed §B's "they HOLLOWED OUT DOUBLE DOCKS, having roofs formed out of the
+native rock" -- YOU CANNOT QUARRY A DOCK INTO AN 8 m CLIFF.
+  ==> Rings STEP UP toward the centre (Rick chose "masts up"):
+        L2 sea+24 (10 m rock roof) | L1 sea+36 (22 m) | citadel sea+55 | belt sea+12
+        headroom 14 m -> a merchantman passes the tunnels WITH ITS MAST UP
+        circuit walls now stand 8 m above THEIR OWN ring (they would otherwise have been BURIED)
+        temple pinnacle lands ~100 m above the sea
+  ==> vmodel now ASSERTS roof thickness at construction. The 2 m roof shipped because NOTHING WAS
+      CHECKING. A ring too short for its headroom now raises at import.
+  ==> "DOUBLE DOCKS": Rick reads it HORIZONTALLY (two ships nose-to-tail), not as stacked levels --
+      also the standard reading of double neosoikoi. dock_depth 44 -> 88 m.
+
+### 3. THE MERCHANTS WERE IN THE WRONG RINGS -- and DEFENCE is what proved it
+Rick, reasoning from FORTIFICATION, not from Plato: "it doesn't make sense to put docks with access
+up to the city in the OUTER walls - a massive vulnerability... merchant cargo would want protection
+from raiders, pirates, and the sea itself."
+The text says so twice, and I had QUOTED BOTH LINES WITHOUT READING THEM:
+  §B: the canal "they carried through to THE OUTERMOST ZONE... WHICH BECAME A HARBOUR"
+  §E: "THE CANAL AND THE LARGEST OF THE HARBOURS were full of vessels and merchants... din and
+      clatter of all sorts night and day"
+And the clincher:
+  §B: the inter-ring passages leave "room for a SINGLE TRIREME to pass out of one zone into another."
+  YOU CANNOT RUN A CARGO ECONOMY THROUGH A ONE-SHIP-AT-A-TIME ROOFED TUNNEL. IT IS A NAVAL SALLY PORT.
+  ==> W3 (outermost, 3 stades, brass wall, fed by the 92 m canal) = THE EMPORION. Trading quays.
+  ==> W1 + W2 (interior, single-trireme tunnels only)             = THE ARSENAL. Neosoikoi.
+  ==> Rick's "dead water behind the quay" WAS NEVER WRONG. It is a 44 m flooded slipway gallery: the
+      ARSENAL, IN THE RIGHT PLACE, WITH THE WRONG TENANT. dock_gen floored it over because it was
+      building a trading port there. Move the trade out; the navy moves in.
+  ==> Cargo goes on W3's OUTER shore (the city side), backed by 50 stades of dense city -- NOT on an
+      exposed outer wall. Rick's threat model, verbatim. Inner shore (L2's cliff) = official side:
+      customs, the deigma, grand stairs, brass wall on the skyline.
+  ==> This is Piraeus (Kantharos commercial / Zea + Mounichia naval), reached from Plato + a threat
+      model rather than imposed from the archaeology.
+
+### 4. EVERY RING IS A DIFFERENT CITY (Rick) -- and §D SPELLS IT OUT
+Our own PLATO_SOURCE §D was TRUNCATED WITH AN ELLIPSIS, and the elided text was the most important
+zoning passage in the dialogue. Restored. It says:
+  "...in the centre of THE LARGER OF THE TWO there was set apart a RACE-COURSE OF A STADIUM IN WIDTH,
+   and in length allowed to EXTEND ALL ROUND THE ISLAND, for horses to race in. Also there were
+   GUARDHOUSES at intervals for the guards, THE MORE TRUSTED OF WHOM were appointed to keep watch in
+   THE LESSER ZONE, WHICH WAS NEARER THE ACROPOLIS, while THE MOST TRUSTED OF ALL had houses given
+   them WITHIN THE CITADEL, near the persons of the kings."
+  ==> THE RINGS ARE RANKS. Least-trusted guard on L2 -> more-trusted on L1 -> most-trusted in the
+      citadel. The concentric plan is a SECURITY GRADIENT. Same logic Rick used on the docks.
+  ==> THE LAND RINGS ARE NOT RESIDENTIAL. §E puts the dense housing in the BELT.
+      city_radial.py IS NOT WRONG -- IT IS AIMED AT THE WRONG ZONE. It is the BELT generator.
+  ==> THE RACECOURSE IS A HARD CONSTRAINT: 1 stade wide, down the CENTRE of L2 (r 8.5->9.5 stades)
+      = a 185 m track with a 10.5 km lap. It consumes the middle third of L2 and dictates the ring.
+  ==> Four characters: CITADEL monumental/sacred | L1 ORDERED (barracks in ranks, the most regular
+      geometry in the build) | L2 OPEN (the racecourse void, stables, horse country) | BELT DENSE
+      (city_radial). L2's openness across the harbour from the belt's density is the strongest urban
+      move available and we currently have NEITHER.
+  ==> Free win: city_radial's pomerium market was designed to back onto the circuit wall. The belt's
+      INNER edge IS the emporion shore -- so the market lands exactly where the ships unload. The
+      pomerium market becomes the QUAYSIDE market, which is what an emporion IS.
+
+### 5. AND ONE FOR THE PALETTE (§B, missed on the first pass)
+"Some of their buildings were simple, but in others they put together DIFFERENT STONES, VARYING THE
+COLOUR TO PLEASE THE EYE, and to be a natural source of delight."
+Rick's "use all the colors of the minecraft stone... interesting, but consistent" IS IN THE TEXT.
+
+### DECISION: FULL REBUILD (Rick)
+"the next run should be a complete rebuild, just to clear the remains of the intermediate placing
+and cuts."  CORRECT, and it RETIRES A CLASS OF RISK: every fix above would otherwise have to fight
+INVARIANT 3 (idempotent re-runs fix CHANGED geometry, NOT REMOVED geometry) -- buried wall tops, the
+15 m canal's banks, the floored-over gallery, the city on the wrong rings. A `//set air` wipe then
+one clean stream and INVARIANT 3 STOPS APPLYING. Cheaper to reason about than any patch sequence.
+
+### THE META-PATTERN, now undeniable
+EVERY correction in this project has come from LOOKING (Rick flying it + computer-use/F3) or from a
+SOURCE (Plato's text, the Zea excavation, the Kyrenia wreck). NOT ONE has come from me reasoning.
+The numbers I took from a source have ALL held. The numbers I eyeballed have ALL had to be redone.
+Corollary discovered today: a magic number that PASSES ITS TEST AT THE VALIDATION SCALE is the most
+dangerous kind, because the test certifies it. Derive, don't calibrate.
+
+### STATE / NEXT
+- vmodel.py v2: DONE (ft2b, stepped rings, canal/tunnel decoupled, roof assertion, arsenal+emporion).
+- HARBOUR_SPEC.md, RING_SPEC.md, PLATO_SOURCE §D+§B restored: DONE.
+- NOT YET DONE (the code): atlantis_cmds.py (canal width, stepped vertical, wall heights, carve
+  locations, belt surface); dock_gen.py (invert: trading -> W3 both shores, naval -> L1/L2 inner
+  faces, 88 m double sheds); city_radial.py re-aim to the belt; ring_l1_gen.py; ring_l2_gen.py
+  (racecourse first -- it dictates the ring).
+- COST: rings roughly double (~+120M blocks at S=185); canal ~6x volume. Both are //generate -r
+  annulus/box work (the cheap path) but the stream needs a LOWER --phase-every than the core run.
+- NOTE FOR EXEC: bash could not mount the repo from Cowork's sandbox this session (UNC), so
+  `python3 vmodel.py` has NOT been run. First thing CC should do: run it and eyeball the dump.

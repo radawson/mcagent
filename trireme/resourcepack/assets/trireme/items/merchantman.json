@@ -1,0 +1,7 @@
+{
+  "__comment": "Item definition for the MERCHANTMAN (the round ship). Referenced by the item_model component value 'trireme:merchantman'. Same mechanism as trireme.json -- see the README.",
+  "model": {
+    "type": "minecraft:model",
+    "model": "trireme:item/merchantman"
+  }
+}

@@ -1,0 +1,8 @@
+//world scratchpad
+//pos1 -9390,-21,10125
+//pos2 -9006,0,10390
+//set minecraft:air
+//schem load cityr_r1_s01
+//paste -o -a
+//schem load city_r1_s00
+//paste -o -a
